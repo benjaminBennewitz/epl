@@ -1,5 +1,6 @@
 class Cloud extends MovingObjects{
 
+    y = 20;
     height = 250;
     width = 500;
 

@@ -1,6 +1,6 @@
 class MovingObjects {
     x = 120;
-    y = 250;
+    y = 300;
     height = 150;
     width = 100;
     img;
