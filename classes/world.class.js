@@ -65,6 +65,16 @@ class World{
 
     // fuction to add objects to the world/canvas
     addToWorld(object){
+        if(object.turnArround){
+            this.ctx.save();
+            this.ctx.translate(object.width, 0);
+            this.ctx.scale(-1,1);
+            object.x = object.x * -1;
+        }
         this.ctx.drawImage(object.img, object.x, object.y, object.width, object.height);
+        if(object.turnArround){
+            object.x = object.x * -1;
+            this.ctx.restore();
+        }
     }
 }

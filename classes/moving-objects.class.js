@@ -7,6 +7,7 @@ class MovingObjects {
     images = {};
     currentImage = 0;
     speed = 0.15;
+    turnArround = false;
 
     loadImg(path){
         this.img = new Image();
