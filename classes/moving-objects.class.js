@@ -8,6 +8,8 @@ class MovingObjects {
     currentImage = 0;
     speed = 0.15;
     turnArround = false;
+    speedY = 0;
+    acceleration = 1.5;
 
     loadImg(path){
         this.img = new Image();
@@ -23,12 +25,35 @@ class MovingObjects {
     }
 
     moveRight(){ 
-        console.log('moving right');
+        this.x += this.speed;
     }
 
     moveLeft(){
-        setInterval (() => {
-            this.x -= this.speed;
+        this.x -= this.speed;
+    }
+
+    playAnimation(images){
+        let i = this.currentImage % this.IMAGES_WALKING.length;
+        let path = images[i];
+        this.img = this.images[path];
+        this.currentImage++;  
+    }
+
+    gravity(){
+        setInterval(() => {
+            if(this.isJumpTrue() || this.speedY > 0){
+                this.speedY -= this.acceleration;
+                this.y -= this.speedY;
+                this.speedY -= this.acceleration;
+            }
         },1000 / 60);
+    }
+
+    isJumpTrue(){
+        return this.y < 120;
+    }
+
+    jump(){
+        this.speedY = 30;
     }
 }

@@ -5,8 +5,6 @@ let control = new Control();
 function init(){
     canvas = document.getElementById('canvas');
     world = new World(canvas,control);
-
-    console.log('Character = ', world.character);
 }
 
 window.addEventListener("keydown",(e) => {
@@ -25,7 +23,6 @@ window.addEventListener("keydown",(e) => {
     if(e.keyCode == 40){
         control.DOWN = true;
     }
-    console.log(e);
 });
 
 window.addEventListener("keyup",(e) => {
@@ -44,5 +41,4 @@ window.addEventListener("keyup",(e) => {
     if(e.keyCode == 40){
         control.DOWN = false;
     }
-    console.log(e);
 });

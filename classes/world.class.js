@@ -2,33 +2,11 @@ class World{
     canvas;
     ctx;
     control;
+    camera_x = 0;
 
     character = new Character();
+    level = level_1;
 
-    enemies = [
-    new Chicken(),
-    new Chicken(),
-    new Chicken(),
-    ];
-
-    clouds = [
-        new Cloud(),
-    ]
-
-    backgroundObjects = [
-        new Background('img/5_background/layers/air.png', 0),
-
-        new Background('img/5_background/layers/3_third_layer/1.png', 0),
-        new Background('img/5_background/layers/3_third_layer/2.png', 0),
-
-        new Background('img/5_background/layers/2_second_layer/1.png', 0),
-        new Background('img/5_background/layers/2_second_layer/2.png', 0),
-
-        new Background('img/5_background/layers/1_first_layer/1.png', 0),
-        new Background('img/5_background/layers/1_first_layer/2.png', 0),
-    ]
-
-    
     constructor(canvas, control){
         this.ctx = canvas.getContext('2d');
         this.canvas = canvas;
@@ -43,11 +21,14 @@ class World{
 
     draw(){
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        this.ctx.translate(this.camera_x,0);
 
-        this.objectsLoop(this.backgroundObjects);
+        this.objectsLoop(this.level.backgroundObjects);
         this.addToWorld(this.character);
-        this.objectsLoop(this.enemies);
-        this.objectsLoop(this.clouds);
+        this.objectsLoop(this.level.enemies);
+        this.objectsLoop(this.level.clouds);
+
+        this.ctx.translate(-this.camera_x,0);
 
         //draw() calls itself again and again 
         let self = this;
