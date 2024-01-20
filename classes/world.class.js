@@ -1,6 +1,7 @@
 class World{
     canvas;
     ctx;
+    control;
 
     character = new Character();
 
@@ -28,10 +29,16 @@ class World{
     ]
 
     
-    constructor(canvas){
+    constructor(canvas, control){
         this.ctx = canvas.getContext('2d');
         this.canvas = canvas;
+        this.control = control;
         this.draw();
+        this.setWorld();
+    }
+
+    setWorld(){
+        this.character.world = this;
     }
 
     draw(){
