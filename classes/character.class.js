@@ -64,12 +64,12 @@ class Character extends MovingObjects{
         this.walking_sound.playbackRate = this.audioSpeed;
 
         setInterval(() => {
-            if(this.world.control.RIGHT || this.world.control.LEFT){
-                this.playAnimation(this.IMAGES_WALKING);
-            }else{
+            if(this.isJumpTrue()){
+                this.playAnimation(this.IMAGES_JUMPING);
+            }else {
 
-                if(this.isJumpTrue()){
-                    this.playAnimation(this.IMAGES_JUMPING);
+                if(this.world.control.RIGHT || this.world.control.LEFT){
+                    this.playAnimation(this.IMAGES_WALKING);
                 }
             }
         },40);

@@ -10,6 +10,7 @@ class MovingObjects {
     turnArround = false;
     speedY = 0;
     acceleration = 1.5;
+    jumpAnimation = false;
 
     loadImg(path){
         this.img = new Image();
@@ -22,6 +23,20 @@ class MovingObjects {
             img.src = path;
             this.images[path] = img;
         });
+    }
+
+    draw(ctx){
+        ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
+    }
+
+    collisionBorder(ctx){
+        if (this instanceof Character || this instanceof Chicken){
+            ctx.beginPath();
+            ctx.lineWidth = '5';
+            ctx.strokeStyle = 'red';
+            ctx.rect(this.x, this.y, this.width, this.height);
+            ctx.stroke();
+        }
     }
 
     moveRight(){ 
