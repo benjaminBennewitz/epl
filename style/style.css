@@ -1,10 +1,77 @@
+@font-face {
+    font-family: 'comic';
+    src: url('../font/comic.ttf');
+}
+
 body{
+    font-family: 'comic',Arial, Helvetica, sans-serif;
+
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+
+    background: url('../img/5_background/second_half_background.png') no-repeat center center fixed;
+    background-size: cover;
+
+    overflow: hidden !important;
+    
 }
 
+.start{
+    background: url('../img/9_intro_outro_screens/start/startscreen_1.png') no-repeat center center;
+    background-size: contain;
+    overflow: hidden !important;
+    height: 480px;
+    width: 720px;
+    z-index: 999;
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/*fallback*/
 canvas {
     background-color: bisque;
+    display: block;
 }
+
+h1{
+    font-size: 30pt;
+    color: white;
+    text-shadow: 2px 2px 2px black;
+}
+
+#endFs{
+    position: absolute;
+    top: 50px;
+    right: 50px;
+}
+
+.fullscreen{
+    width: 100vw;
+    height: 100vh;
+}
+
+.hide{
+    display: none;
+}
+
+
+/*Media Querrys*/
+@media only screen and (max-width: 720px) {
+   canvas{
+        width: 100%;
+   }
+   h1{
+        display: none;
+    }
+}
+
+@media only screen and (max-width: 480px) {
+    canvas{
+        height: 100vh;
+    }
+ }

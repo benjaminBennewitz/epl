@@ -7,14 +7,17 @@
 
     <link rel="stylesheet" href="style/style.css">
 
+    <script src="classes/drawable-objects.class.js"></script>
     <script src="classes/moving-objects.class.js"></script>
     <script src="classes/character.class.js"></script>
     <script src="classes/chicken.class.js"></script>
     <script src="classes/cloud.class.js"></script>
+    <script src="classes/status-bars.class.js"></script>
     <script src="classes/world.class.js"></script>
     <script src="classes/backgrounds.class.js"></script>
     <script src="classes/control.class.js"></script>
     <script src="classes/level.class.js"></script>
+    <script src="classes/projectile.class.js"></script>
     <script src="classes/endboss.class.js"></script>
 
     <script src="js/level1.js"></script>
@@ -22,11 +25,18 @@
 
     <title>Cyberpunk 2024</title>
 </head>
-<body onload="init()">
+<body>
 
-    <h1>Cyberpunk 2024</h1>
-    
-    <canvas width="720" height="480" id="canvas"></canvas>
+    <div id="start" class="start">
+        <button id="playBtn" onclick="init()">START</button>
+    </div>
 
+    <div id="fullscreen" class="hide">
+        <h1 id="heading">Cyberpunk 2024</h1>
+        <canvas id="canvas" width="720" height="480"></canvas>
+        <button id="activateFs" onclick="fullscreen()">VOLL</button>
+        <div id="disableFs"></div>
+    </div>
+        
 </body>
 </html>

@@ -1,42 +1,37 @@
-class MovingObjects {
-    x = 120;
-    y = 300;
-    height = 150;
-    width = 100;
-    img;
-    images = {};
-    currentImage = 0;
+class MovingObjects extends DrawableObject{
     speed = 0.15;
     turnArround = false;
     speedY = 0;
     acceleration = 1.5;
     jumpAnimation = false;
+    life = 100;
+    hitCount = 0;
 
-    loadImg(path){
-        this.img = new Image();
-        this.img.src = path;
+
+    collisionDetection(object){
+        return this.x + this.width > object.x &&
+               this.y + this.height > object.y &&
+               this.x < object.x &&
+               this.y < object.y + object.height;
     }
 
-    loadImages(array){
-        array.forEach((path) => {
-            let img = new Image();
-            img.src = path;
-            this.images[path] = img;
-        });
-    }
-
-    draw(ctx){
-        ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
-    }
-
-    collisionBorder(ctx){
-        if (this instanceof Character || this instanceof Chicken){
-            ctx.beginPath();
-            ctx.lineWidth = '5';
-            ctx.strokeStyle = 'red';
-            ctx.rect(this.x, this.y, this.width, this.height);
-            ctx.stroke();
+    hit(){
+        this.life -= 1;
+        if(this.life < 0){
+            this.life = 0;
+        }else{
+            this.hitCount =new Date().getTime();
         }
+    }
+
+    isHurt(){
+        let checkHits = new Date().getTime() - this.hitCount;
+        checkHits = checkHits / 1000;
+        return checkHits < 1;
+    }
+
+    isDead(){
+        return this.life == 0;
     }
 
     moveRight(){ 
@@ -48,7 +43,7 @@ class MovingObjects {
     }
 
     playAnimation(images){
-        let i = this.currentImage % this.IMAGES_WALKING.length;
+        let i = this.currentImage % images.length;
         let path = images[i];
         this.img = this.images[path];
         this.currentImage++;  
@@ -57,7 +52,6 @@ class MovingObjects {
     gravity(){
         setInterval(() => {
             if(this.isJumpTrue() || this.speedY > 0){
-                this.speedY -= this.acceleration;
                 this.y -= this.speedY;
                 this.speedY -= this.acceleration;
             }
@@ -65,7 +59,11 @@ class MovingObjects {
     }
 
     isJumpTrue(){
-        return this.y < 120;
+        if(this instanceof Projectiles){
+            return true;
+        } else {
+            return this.y < 120;
+        }
     }
 
     jump(){

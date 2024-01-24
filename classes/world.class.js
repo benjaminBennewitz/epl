@@ -5,6 +5,8 @@ class World{
     camera_x = 0;
 
     character = new Character();
+    statusBar = new StatusBar();
+    projectile = [];
     level = level_1;
 
     constructor(canvas, control){
@@ -13,24 +15,54 @@ class World{
         this.control = control;
         this.draw();
         this.setWorld();
+        this.run();
     }
 
     setWorld(){
         this.character.world = this;
     }
 
+    run(){
+        setInterval(() => {
+            this.checkCollisions();
+            this.checkProjectiles();
+        }, 200);
+    }
+
+    checkCollisions(){
+        this.level.enemies.forEach((enemy) => {
+            if(this.character.collisionDetection(enemy)){
+                this.character.hit();
+                this.statusBar.setPercentage(this.character.life);
+                console.log('Kollision erkannt mit', enemy, 'Leben:', this.character.life);
+            }
+        });
+    }
+
+    checkProjectiles(){
+       if(this.control.D){
+            let projectile = new Projectiles(this.character.x + 100, this.character.y + 100);
+            this.projectile.push(projectile);
+       }
+    }
+
     draw(){
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.ctx.translate(this.camera_x,0);
-
         this.objectsLoop(this.level.backgroundObjects);
+
+        this.ctx.translate(-this.camera_x,0);
+        this.addToWorld(this.statusBar);
+        this.ctx.translate(this.camera_x,0);
+
         this.addToWorld(this.character);
+
+        this.objectsLoop(this.projectile);
         this.objectsLoop(this.level.enemies);
         this.objectsLoop(this.level.clouds);
 
         this.ctx.translate(-this.camera_x,0);
 
-        //draw() calls itself again and again 
         let self = this;
         requestAnimationFrame(function(){
             self.draw();
