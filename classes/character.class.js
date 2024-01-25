@@ -58,18 +58,30 @@ class Character extends MovingObjects{
 }
 
     animate(){
+        const audioIconSwitch = document.getElementById('audioIconSwitch');
+        
+            
+        
+       
 
         setInterval(() => {
             this.walking_sound.pause();
+            
             if(this.world.control.RIGHT && this.x < this.world.level.level_end_x){
                 this.moveRight();
                 this.turnArround = false;
                 this.walking_sound.play();
+                if (audioIconSwitch && audioIconSwitch.classList.contains('audio-off')){
+                    this.walking_sound.pause();
+                } 
             }
             if(this.world.control.LEFT && this.x > 0){
                 this.moveLeft();
                 this.turnArround = true;
                 this.walking_sound.play();
+                if (audioIconSwitch && audioIconSwitch.classList.contains('audio-off')){
+                    this.walking_sound.pause();
+                } 
             }
 
             if(this.world.control.SPACE && !this.isJumpTrue()){
@@ -100,4 +112,5 @@ class Character extends MovingObjects{
     jump(){
         this.speedY = 30;
     }
+    
 }

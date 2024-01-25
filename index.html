@@ -27,16 +27,50 @@
 </head>
 <body>
 
-    <div id="start" class="start">
+    <!-- START SCREEN -->
+    <div id="start" class="start-wrapper">
+        <div class="start">
+            <div id="btnWrapper" class="btn-wrapper">
+                <button id="storyBtn" class="btn" onclick="openModal()"><img src="img/10_sonstiges/book.svg"/></button>
+                <button id="audioBtn" class="btn" onclick="audioOnOff()"><div id="audioIconSwitch" class="audio-on"></div></button>
+            </div>
+            <img class="start-screen" src="img/9_intro_outro_screens/start/startscreen_1.png"/>
+        </div>
+        <img id="controlImg" class="control-img" src="img/10_sonstiges/control.png"/>
         <button id="playBtn" onclick="init()">START</button>
-    </div>
 
+         <!-- Modal -->
+        <div id="storyModal" class="modal hide">
+            <span class="close-btn" onclick="closeModal()">X</span>
+            <div class="modal-content">
+                <h1>Die Abenteuer von Pepe</h1>
+                <p>In einem kleinen mexikanischen Dorf namens Pueblo Soleado lebte ein junger Mann namens Pepe. 
+                    Pepe war bekannt für seinen Mut und seine Abenteuerlust. Eines Tages verbreitete sich die Nachricht 
+                    im Dorf über ein bösartiges Huhn, das die friedliche Wüste von Mexiko unsicher machte. 
+                    Das Huhn verursachte Unruhe und brachte Unheil über das Land.
+                </p>
+                <p>Pepe, fest entschlossen, seinem Dorf zu helfen, machte sich auf den Weg durch die endlosen Sanddünen 
+                    und heißen Sonnenstrahlen der Wüste. Sein Ziel war klar: das bösartige Huhn aufhalten und Frieden 
+                    in die Region bringen.
+                </p>
+                <p>Nach einer abenteuerlichen Reise traf Pepe schließlich auf das bösartige Huhn, das mit wilden Federn 
+                    und einem bösen Blick drohend vor ihm stand. Ohne zu zögern stellte sich Pepe mutig dem Huhn entgegen. 
+                    Ein spannender Kampf zwischen Gut und Böse begann.
+                </p>
+            </div>
+        </div>
+    </div>
+    <!-- START SCREEN -->
+
+
+
+    <!-- PLAY SCREEN -->
     <div id="fullscreen" class="hide">
-        <h1 id="heading">Cyberpunk 2024</h1>
         <canvas id="canvas" width="720" height="480"></canvas>
         <button id="activateFs" onclick="fullscreen()">VOLL</button>
         <div id="disableFs"></div>
     </div>
+    <!-- PLAY SCREEN -->
         
 </body>
 </html>

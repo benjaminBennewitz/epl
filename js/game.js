@@ -18,7 +18,7 @@ function showCanvas(){
     test1.classList.add('hide');
 }
 
-window.addEventListener("keydown",(e) => {
+window.addEventListener('keydown',(e) => {
     //console.log(e.keyCode);
     if(e.keyCode == 39){
         control.RIGHT = true;
@@ -40,7 +40,7 @@ window.addEventListener("keydown",(e) => {
     }
 });
 
-window.addEventListener("keyup",(e) => {
+window.addEventListener('keyup',(e) => {
     if(e.keyCode == 39){
         control.RIGHT = false;
     }
@@ -64,8 +64,7 @@ window.addEventListener("keyup",(e) => {
 function fullscreen(){
     let fullscreen = document.getElementById('fullscreen');
     document.getElementById('canvas').classList.add('fullscreen');
-    document.getElementById('heading').style.display = 'none';
-    document.getElementById('disableFs').innerHTML = /*HTML*/`<button id="endFs" onclick="exitFullscreen(),resetAll()">Disable Fullscreen</button>`;
+    document.getElementById('disableFs').innerHTML = /*HTML*/`<button id='endFs' onclick='exitFullscreen(),resetAll()'>Disable Fullscreen</button>`;
     enterFullscreen(fullscreen);
 }
 
@@ -95,7 +94,20 @@ function exitFullscreen(){
 
 function resetAll(){
     let canvasHtml = document.getElementById('canvas');
-    document.getElementById('heading').style.display = 'block';
     document.getElementById('endFs').style.display = 'none';
     canvasHtml.classList.remove('fullscreen');
+}
+
+function audioOnOff(){
+    document.getElementById('audioIconSwitch').classList.toggle('audio-off');
+}
+
+function openModal() {
+    var modal = document.getElementById('storyModal');
+    modal.classList.remove('hide');
+}
+
+function closeModal() {
+    var modal = document.getElementById('storyModal');
+    modal.classList.add('hide');
 }
