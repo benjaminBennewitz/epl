@@ -55,33 +55,31 @@ class Character extends MovingObjects{
         this.loadImages(this.IMAGES_HURT);
         this.animate();
         this.gravity();
-}
+    }
+
+    checkAudio(){
+        const audioIconSwitch = document.getElementById('audioIconSwitch');
+        if (audioIconSwitch && audioIconSwitch.classList.contains('audio-off')){
+            this.walking_sound.pause();
+        } else if (audioIconSwitch && audioIconSwitch.classList.contains('audio-on')){
+            this.walking_sound.play();
+        }
+    }
 
     animate(){
-        const audioIconSwitch = document.getElementById('audioIconSwitch');
-        
-            
-        
-       
-
         setInterval(() => {
             this.walking_sound.pause();
             
             if(this.world.control.RIGHT && this.x < this.world.level.level_end_x){
                 this.moveRight();
                 this.turnArround = false;
-                this.walking_sound.play();
-                if (audioIconSwitch && audioIconSwitch.classList.contains('audio-off')){
-                    this.walking_sound.pause();
-                } 
+                this.checkAudio();
             }
+
             if(this.world.control.LEFT && this.x > 0){
                 this.moveLeft();
                 this.turnArround = true;
-                this.walking_sound.play();
-                if (audioIconSwitch && audioIconSwitch.classList.contains('audio-off')){
-                    this.walking_sound.pause();
-                } 
+                this.checkAudio();
             }
 
             if(this.world.control.SPACE && !this.isJumpTrue()){
