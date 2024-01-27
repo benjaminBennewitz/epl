@@ -64,7 +64,8 @@ window.addEventListener('keyup',(e) => {
 function fullscreen(){
     let fullscreen = document.getElementById('fullscreen');
     document.getElementById('canvas').classList.add('fullscreen');
-    document.getElementById('disableFs').innerHTML = /*HTML*/`<button id='endFs' onclick='exitFullscreen(),resetAll()'>Disable Fullscreen</button>`;
+    document.getElementById('activateFs').classList.add('hide');
+    document.getElementById('disableFs').innerHTML = /*HTML*/`<button id='endFs' class="btn" onclick='exitFullscreen(),resetAll()'><div class="disable-fs"></div></button>`;
     enterFullscreen(fullscreen);
 }
 
@@ -95,6 +96,7 @@ function exitFullscreen(){
 function resetAll(){
     let canvasHtml = document.getElementById('canvas');
     document.getElementById('endFs').style.display = 'none';
+    document.getElementById('activateFs').classList.remove('hide');
     canvasHtml.classList.remove('fullscreen');
 }
 

@@ -50,6 +50,7 @@ class World{
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.ctx.translate(this.camera_x,0);
         this.objectsLoop(this.level.backgroundObjects);
+        this.objectsLoop(this.level.clouds);
 
         this.ctx.translate(-this.camera_x,0);
         this.addToWorld(this.statusBar);
@@ -59,8 +60,7 @@ class World{
 
         this.objectsLoop(this.projectile);
         this.objectsLoop(this.level.enemies);
-        this.objectsLoop(this.level.clouds);
-
+        
         this.ctx.translate(-this.camera_x,0);
 
         let self = this;
