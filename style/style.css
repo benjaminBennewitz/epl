@@ -169,7 +169,7 @@ canvas {
 }
 
 .modal-content p{
-    font-size: 14pt;
+    font-size: 16pt;
 }
 
 .close-btn{
@@ -215,6 +215,15 @@ canvas {
     background:url('../img/10_sonstiges/not-full.svg');
     width: 32px;
     height: 32px;
+}
+
+.show-controls img{
+    max-width: 720px;
+    height: auto;
+    position: absolute;
+    bottom: 160px;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 

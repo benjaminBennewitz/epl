@@ -7,7 +7,6 @@ class MovingObjects extends DrawableObject{
     life = 100;
     hitCount = 0;
 
-
     collisionDetection(object){
         return this.x + this.width > object.x &&
                this.y + this.height > object.y &&
@@ -68,5 +67,28 @@ class MovingObjects extends DrawableObject{
 
     jump(){
         this.speedY = 30;
+    }
+
+    checkAudio(soundOn) {
+        const audioIconSwitch = document.getElementById('audioIconSwitch');
+    
+        switch (true) {
+            case (audioIconSwitch && audioIconSwitch.classList.contains('audio-off')):
+                this.pauseSounds();
+                break;
+
+            case (audioIconSwitch && audioIconSwitch.classList.contains('audio-on')):
+                this.soundOn;
+                break;
+    
+            default:
+                break;
+        }
+    }
+    
+    pauseSounds() {
+        this.walking_sound.pause();
+        this.hurt_sound.pause();
+        this.sleeping_sound.pause();
     }
 }

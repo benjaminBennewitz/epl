@@ -6,13 +6,16 @@
     <meta name="google" content="notranslate">
 
     <link rel="stylesheet" href="style/style.css">
+    <link rel="shortcut icon" type="image/x-icon" href="img/10_sonstiges/favicon.png">
 
     <script src="classes/drawable-objects.class.js"></script>
     <script src="classes/moving-objects.class.js"></script>
     <script src="classes/character.class.js"></script>
     <script src="classes/chicken.class.js"></script>
     <script src="classes/cloud.class.js"></script>
-    <script src="classes/status-bars.class.js"></script>
+    <script src="classes/statusbar-health.class.js"></script>
+    <script src="classes/statusbar-coins.class.js"></script>
+    <script src="classes/statusbar-bottles.class.js"></script>
     <script src="classes/world.class.js"></script>
     <script src="classes/backgrounds.class.js"></script>
     <script src="classes/control.class.js"></script>
@@ -32,7 +35,6 @@
         <div class="start">
             <div id="btnWrapper" class="btn-wrapper">
                 <button id="storyBtn" class="btn" onclick="openModal()"><img src="img/10_sonstiges/book.svg"/></button>
-                <button id="audioBtn" class="btn" onclick="audioOnOff()"><div id="audioIconSwitch" class="audio-on"></div></button>
             </div>
             <img class="start-screen" src="img/9_intro_outro_screens/start/startscreen_1.png"/>
         </div>
@@ -68,11 +70,17 @@
     <div id="fullscreen" class="hide">
         <canvas id="canvas" width="720" height="480"></canvas>
         <div id="settingsBtn" class="settings-btn">
+            <button id="audioBtn" class="btn" onclick="audioOnOff('audioIconSwitch')"><div id="audioIconSwitch" class="audio-on"></div></button>
+            <button class="btn" onclick="showControls()"><img src="img/10_sonstiges/controls.svg"/></button>
             <button id="activateFs" class="btn" onclick="fullscreen()"><div class="activate-fs"></div></button>
             <div id="disableFs"></div>
         </div>
     </div>
+    <div>
+        <div id="showControls" class="show-controls hide"><img src="img/10_sonstiges/control.png"/></div>
+    </div>
     <!-- PLAY SCREEN -->
+
         
 </body>
 </html>

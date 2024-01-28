@@ -6,6 +6,8 @@ class World{
 
     character = new Character();
     statusBar = new StatusBar();
+    coinBar = new CoinBar();
+    bottleBar = new BottleBar();
     projectile = [];
     level = level_1;
 
@@ -54,6 +56,8 @@ class World{
 
         this.ctx.translate(-this.camera_x,0);
         this.addToWorld(this.statusBar);
+        this.addToWorld(this.coinBar);
+        this.addToWorld(this.bottleBar);
         this.ctx.translate(this.camera_x,0);
 
         this.addToWorld(this.character);

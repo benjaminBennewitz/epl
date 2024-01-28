@@ -76,11 +76,9 @@ class Character extends MovingObjects{
         'img/2_character_pepe/1_idle/long_idle/I-20.png',
     ];
 
-
     walking_sound = new Audio('audio/walking.mp3');
     hurt_sound = new Audio('audio/hurt.mp3');
-   // idle_sound = new Audio('audio/idle.mp3');
-    //longIdle_sound = new Audio('audio/longIdle.mp3');
+    sleeping_sound = new Audio('audio/sleeping.mp3');
 
     constructor(){
         super().loadImg('img/2_character_pepe/2_walk/W-21.png');
@@ -94,49 +92,39 @@ class Character extends MovingObjects{
         this.gravity();
     }
 
-    checkAudio(){
-        const audioIconSwitch = document.getElementById('audioIconSwitch');
-        if (audioIconSwitch && audioIconSwitch.classList.contains('audio-off')){
-            this.walking_sound.pause();
-            this.hurt_sound.pause();
-        } else if (audioIconSwitch && audioIconSwitch.classList.contains('audio-on')){
-            this.walking_sound.play();
-            this.hurt_sound.play();
-        }
-    }
-
-    animate(){
+    animate() {
         setInterval(() => {
-            this.walking_sound.pause();
-            this.hurt_sound.pause();
-            
-            if(this.world.control.RIGHT && this.x < this.world.level.level_end_x){
+            this.pauseSounds();
+    
+            if (this.world.control.RIGHT && this.x < this.world.level.level_end_x) {
                 this.moveRight();
                 this.turnArround = false;
-                this.checkAudio();
-                this.hurt_sound.pause();
+                this.checkAudio(this.walking_sound.play());
             }
-
-            if(this.world.control.LEFT && this.x > 0){
+    
+            if (this.world.control.LEFT && this.x > 0) {
                 this.moveLeft();
                 this.turnArround = true;
-                this.checkAudio();
-                this.hurt_sound.pause();
+                this.checkAudio(this.walking_sound.play());
             }
-
-            if(this.isHurt()){
-                this.checkAudio();
+    
+            if (this.isHurt()) {
+                this.checkAudio(this.hurt_sound.play());
             }
-
-            if(this.world.control.SPACE && !this.isJumpTrue()){
+    
+            if (this.longIdleTimer >= this.longIdleThreshold) {
+                this.checkAudio(this.sleeping_sound.play());
+            }
+    
+            if (this.world.control.SPACE && !this.isJumpTrue()) {
                 this.jump();
+                this.walking_sound.pause();
             }
-
             this.world.camera_x = -this.x + 100;
-        }, 1000 / 60);
-
+        }, 1000 / 55);
+    
         this.walking_sound.playbackRate = this.audioSpeed;
-
+    
         setInterval(() => {
             if (this.isDead()) {
                 this.playAnimation(this.IMAGES_DEAD);
@@ -151,7 +139,7 @@ class Character extends MovingObjects{
             } else {
                 this.idleTimer += 80;
                 this.longIdleTimer += 80;
-
+    
                 if (this.idleTimer >= this.idleThreshold) {
                     this.playAnimation(this.IMAGES_IDLE);
                 }
@@ -162,9 +150,8 @@ class Character extends MovingObjects{
         }, 80);
     }
     
-
     jump(){
-        this.speedY = 30;
+        this.speedY = 22;
     }
     
 }

@@ -11,11 +11,11 @@ function init(){
 }
 
 function showCanvas(){
-    let test = document.getElementById('fullscreen');
-    let test1 = document.getElementById('start');
+    let fullscreen = document.getElementById('fullscreen');
+    let startScreen = document.getElementById('start');
 
-    test.classList.remove('hide');
-    test1.classList.add('hide');
+    fullscreen.classList.remove('hide');
+    startScreen.classList.add('hide');
 }
 
 window.addEventListener('keydown',(e) => {
@@ -100,8 +100,8 @@ function resetAll(){
     canvasHtml.classList.remove('fullscreen');
 }
 
-function audioOnOff(){
-    document.getElementById('audioIconSwitch').classList.toggle('audio-off');
+function audioOnOff(id){
+    document.getElementById(id).classList.toggle('audio-off');
 }
 
 function openModal() {
@@ -112,4 +112,8 @@ function openModal() {
 function closeModal() {
     var modal = document.getElementById('storyModal');
     modal.classList.add('hide');
+}
+
+function showControls(){
+    document.getElementById('showControls').classList.toggle('hide');
 }
