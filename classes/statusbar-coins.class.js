@@ -1,4 +1,3 @@
-MAX_COINS = 20;
 class CoinBar extends DrawableObject {
     
     IMAGES_COINS = [
@@ -10,7 +9,7 @@ class CoinBar extends DrawableObject {
         'img/7_statusbars/1_statusbar/1_statusbar_coin/orange/100.png'
     ];
 
-    collectedCoins = 0;
+    percentage = 0;
 
     constructor() {
         super();
@@ -22,26 +21,22 @@ class CoinBar extends DrawableObject {
         this.setCollectedCoins(0);
     }
 
-
-    setCollectedCoins(count) {
-        this.collectedCoins = count;
+    setCollectedCoins(percentage){
+        this.percentage = percentage;
         let path = this.IMAGES_COINS[this.checkImgIndex()];
         this.img = this.images[path];
     }
 
-    
-    checkImgIndex() {
-        let percentage = (this.collectedCoins / MAX_COINS) * 100;
-
-        if (percentage >= 80) {
+    checkImgIndex(){
+        if(this.percentage == 100){
             return 5;
-        } else if (percentage >= 60) {
+        } else if (this.percentage > 80){
             return 4;
-        } else if (percentage >= 40) {
+        } else if (this.percentage > 60){
             return 3;
-        } else if (percentage >= 20) {
+        } else if (this.percentage > 40){
             return 2;
-        } else if (percentage > 0) {
+        } else if (this.percentage > 20){
             return 1;
         } else {
             return 0;

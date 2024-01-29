@@ -8,6 +8,7 @@ class World{
     statusBar = new StatusBar();
     coinBar = new CoinBar();
     bottleBar = new BottleBar();
+    coins = new Coin();
     projectile = [];
     level = level_1;
 
@@ -61,9 +62,9 @@ class World{
         this.ctx.translate(this.camera_x,0);
 
         this.addToWorld(this.character);
-
         this.objectsLoop(this.projectile);
         this.objectsLoop(this.level.enemies);
+        this.objectsLoop(this.level.coins);
         
         this.ctx.translate(-this.camera_x,0);
 
@@ -73,14 +74,12 @@ class World{
         });
     }
 
-    // help fuction to loop through objects
     objectsLoop(objects){
         objects.forEach((object) => {
             this.addToWorld(object);
         });
     }
 
-    // fuction to add objects to the world/canvas
     addToWorld(object){
         if(object.turnArround){
             this.flipImage(object);
