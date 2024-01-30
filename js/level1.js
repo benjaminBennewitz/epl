@@ -11,7 +11,25 @@ function initLevel(){
         new Coin(),
         new Coin(),
         new Coin(),
+        new Coin(),
+        new Coin(),
+        new Coin(),
+        new Coin(),
+        new Coin(),
+        new Coin(),
         new Coin()
+    ],
+    [
+        new Bottle(),
+        new Bottle(),
+        new Bottle(),
+        new Bottle(),
+        new Bottle(),
+        new Bottle(),
+        new Bottle(),
+        new Bottle(),
+        new Bottle(),
+        new Bottle()
     ],
     [
         new Cloud('img/5_background/layers/4_clouds/1.png'),

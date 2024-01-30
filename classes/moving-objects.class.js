@@ -68,27 +68,4 @@ class MovingObjects extends DrawableObject{
     jump(){
         this.speedY = 30;
     }
-
-    checkAudio(soundOn) {
-        const audioIconSwitch = document.getElementById('audioIconSwitch');
-    
-        switch (true) {
-            case (audioIconSwitch && audioIconSwitch.classList.contains('audio-off')):
-                this.pauseSounds();
-                break;
-
-            case (audioIconSwitch && audioIconSwitch.classList.contains('audio-on')):
-                this.soundOn;
-                break;
-    
-            default:
-                break;
-        }
-    }
-    
-    pauseSounds() {
-        this.walking_sound.pause();
-        this.hurt_sound.pause();
-        this.sleeping_sound.pause();
-    }
 }

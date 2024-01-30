@@ -9,6 +9,7 @@ class World{
     coinBar = new CoinBar();
     bottleBar = new BottleBar();
     coins = new Coin();
+    bottles = new Bottle();
     projectile = [];
     level = level_1;
 
@@ -65,6 +66,7 @@ class World{
         this.objectsLoop(this.projectile);
         this.objectsLoop(this.level.enemies);
         this.objectsLoop(this.level.coins);
+        this.objectsLoop(this.level.bottles);
         
         this.ctx.translate(-this.camera_x,0);
 

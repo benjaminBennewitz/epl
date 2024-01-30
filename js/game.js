@@ -3,7 +3,13 @@ let canvasHtml;
 let world;
 let control = new Control();
 
+bgMusic = new Audio('audio/level1_theme.mp3');
+bgChickenSounds = new Audio('audio/chicken_sounds.mp3');
+
+const audioIconSwitch = document.getElementById('audioIconSwitch');
+
 function init(){
+    setInterval(checkAudio, 1000);
     initLevel();
     showCanvas();
     canvas = document.getElementById('canvas');
@@ -61,12 +67,31 @@ window.addEventListener('keyup',(e) => {
     }
 });
 
+let escapePressed = false;  // Variable, um zu überprüfen, ob die Escape-Taste bereits gedrückt wurde
+
 function fullscreen(){
     let fullscreen = document.getElementById('fullscreen');
     document.getElementById('canvas').classList.add('fullscreen');
     document.getElementById('activateFs').classList.add('hide');
-    document.getElementById('disableFs').innerHTML = /*HTML*/`<button id='endFs' class="btn" onclick='exitFullscreen(),resetAll()'><div class="disable-fs"></div></button>`;
-    enterFullscreen(fullscreen);
+    document.getElementById('disableFs').innerHTML = /*HTML*/`<button id='endFs' class="btn" onclick='toggleFullscreen()'><div class="disable-fs"></div></button>`;
+    document.addEventListener('keydown', exitOnEsc);
+}
+
+function toggleFullscreen() {
+    if(isFullscreen()){
+        exitFullscreen();
+    } else {
+        enterFullscreen(document.documentElement);
+    }
+}
+
+function isFullscreen(){
+    return (
+        document.fullscreenElement ||
+        document.webkitFullscreenElement ||
+        document.mozFullScreenElement ||
+        document.msFullscreenElement
+    );
 }
 
 function enterFullscreen(element){
@@ -93,11 +118,23 @@ function exitFullscreen(){
     }
 }
 
+function exitOnEsc(e){
+    if(e.keyCode == 27 && !escapePressed){
+        escapePressed = true;
+        if(isFullscreen()){
+            exitFullscreen();
+        }
+        resetAll();
+    }
+}
+
 function resetAll(){
+    escapePressed = false;  // Zurücksetzen der Variable für zukünftige Tastendrücke
     let canvasHtml = document.getElementById('canvas');
     document.getElementById('endFs').style.display = 'none';
     document.getElementById('activateFs').classList.remove('hide');
     canvasHtml.classList.remove('fullscreen');
+    document.removeEventListener('keydown', exitOnEsc);  // Event-Listener entfernen
 }
 
 function audioOnOff(id){
@@ -116,4 +153,44 @@ function closeModal() {
 
 function showControls(){
     document.getElementById('showControls').classList.toggle('hide');
+}
+
+function playBgMusic(){
+    bgMusic.play();
+    bgMusic.volume = 0.2;
+    bgMusic.loop = true;
+}
+
+function playBgSounds(){
+    bgChickenSounds.play();
+    bgChickenSounds.loop = true;
+}
+
+function muteAll(){
+    bgMusic.muted = true;
+    bgChickenSounds.muted = true;
+}
+
+function unmuteAll(){
+    bgMusic.muted = false;
+    bgChickenSounds.muted = false;
+}
+
+function checkAudio() {
+    const audioIconSwitch = document.getElementById('audioIconSwitch');
+
+    switch (true) {
+        case (audioIconSwitch && audioIconSwitch.classList.contains('audio-off')):
+            muteAll();
+            break;
+
+        case (audioIconSwitch && audioIconSwitch.classList.contains('audio-on')):
+            unmuteAll();
+            playBgMusic();
+            playBgSounds();
+            break;
+
+        default:
+            break;
+    }
 }
