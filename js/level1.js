@@ -19,9 +19,7 @@ function initLevel(){
         new Cloud('img/5_background/layers/4_clouds/1.png'),
         new Cloud('img/5_background/layers/4_clouds/2.png'),
         new Cloud('img/5_background/layers/4_clouds/1.png'),
-        new Cloud('img/5_background/layers/4_clouds/2.png')
-    ],
-    [
+        new Cloud('img/5_background/layers/4_clouds/2.png'),
         new Cloud('img/5_background/layers/4_clouds/1.png'),
         new Cloud('img/5_background/layers/4_clouds/2.png'),
         new Cloud('img/5_background/layers/4_clouds/1.png'),
