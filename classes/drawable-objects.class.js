@@ -26,11 +26,13 @@ class DrawableObject {
     }
 
     collisionBorder(ctx){
-        if (this instanceof Character || this instanceof Chicken){
+        if (this instanceof Character || this instanceof Chicken || this instanceof Bottle || this instanceof Coin || this instanceof Endboss){
+            const topOffset = (this instanceof Character) ? 135 : 0;
+
             ctx.beginPath();
             ctx.lineWidth = '5';
             ctx.strokeStyle = 'red';
-            ctx.rect(this.x, this.y, this.width, this.height);
+            ctx.rect(this.x, this.y + topOffset, this.width, this.height - topOffset);
             ctx.stroke();
         }
     }

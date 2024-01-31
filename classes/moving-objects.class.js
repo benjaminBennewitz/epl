@@ -6,12 +6,14 @@ class MovingObjects extends DrawableObject{
     jumpAnimation = false;
     life = 100;
     hitCount = 0;
+    collectedCoins = 0;
+    collectedBottles = 0;
 
     collisionDetection(object){
         return this.x + this.width > object.x &&
                this.y + this.height > object.y &&
                this.x < object.x &&
-               this.y < object.y + object.height;
+               this.y < object.y + object.height -150;
     }
 
     hit(){
@@ -21,6 +23,14 @@ class MovingObjects extends DrawableObject{
         }else{
             this.hitCount =new Date().getTime();
         }
+    }
+
+    collectCoin(){
+        this.collectedCoins += 10;
+    }
+
+    collectBottle(){
+        this.collectedBottles += 10;
     }
 
     isHurt(){

@@ -4,8 +4,8 @@ class Coin extends DrawableObject {
         'img/8_coin/coin_2.png'
     ];
 
-    height = 130;
-    width = 130;
+    height = 80;
+    width = 80;
    
     constructor(){
         super().loadImg('img/8_coin/coin_1.png');

@@ -5,5 +5,4 @@ class Control{
     DOWN = false;
     SPACE = false;
     D = false;
-    ESC = false;
 }

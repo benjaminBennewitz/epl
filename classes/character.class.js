@@ -178,8 +178,6 @@ class Character extends MovingObjects{
         this.speedY = 22;
     }
 
-
-    
     muteCharSounds(){
         this.walking_sound.muted = true;
         this.hurt_sound.muted = true;

@@ -8,6 +8,9 @@ class World{
     statusBar = new StatusBar();
     coinBar = new CoinBar();
     bottleBar = new BottleBar();
+    coin_sound = new Audio('audio/coin.mp3');
+    bottle_sound = new Audio('audio/bottle.mp3');
+    bottle_throw_sound = new Audio('audio/throw.mp3');
     coins = new Coin();
     bottles = new Bottle();
     projectile = [];
@@ -28,12 +31,14 @@ class World{
 
     run(){
         setInterval(() => {
-            this.checkCollisions();
+            this.checkCollisionCharacter();
             this.checkProjectiles();
+            this.checkGetCoins();
+            this.checkGetBottles();
         }, 200);
     }
 
-    checkCollisions(){
+    checkCollisionCharacter(){
         this.level.enemies.forEach((enemy) => {
             if(this.character.collisionDetection(enemy)){
                 this.character.hit();
@@ -43,10 +48,37 @@ class World{
         });
     }
 
+    checkGetCoins(){
+        this.level.coins.forEach((coin) => {
+            if(this.character.collisionDetection(coin)){
+                this.character.collectCoin();
+                this.coinBar.setCollectedCoins(this.character.collectedCoins);
+                this.checkItemsSounds(this.coin_sound);
+                coin.x = -1000;
+                coin.y = -1000;
+                console.log('Coin eingesammelt! Gesammelte Coins:', this.character.collectedCoins);
+            }
+        });
+    }
+
+    checkGetBottles(){
+        this.level.bottles.forEach((bottle) => {
+            if(this.character.collisionDetection(bottle)){
+                this.character.collectBottle();
+                this.bottleBar.setCollectedBottles(this.character.collectedBottles);
+                this.checkItemsSounds(this.bottle_sound);
+                bottle.x = -1000;
+                bottle.y = -1000;
+                console.log('Bottle eingesammelt! Gesammelte Bottles:', this.character.collectedBottles);
+            }
+        });
+    }
+
     checkProjectiles(){
        if(this.control.D){
             let projectile = new Projectiles(this.character.x + 100, this.character.y + 100);
             this.projectile.push(projectile);
+            this.checkItemsSounds(this.bottle_throw_sound);
        }
     }
 
@@ -105,5 +137,35 @@ class World{
     flipImageBack(object){
         object.x = object.x * -1;
         this.ctx.restore();
+    }
+
+    muteItemSounds(){
+        this.coin_sound.muted = true;
+        this.bottle_sound.muted = true;
+        this.bottle_throw_sound.muted = true;
+    }
+    
+    unmuteItemSounds(){
+        this.coin_sound.muted = false;
+        this.bottle_sound.muted = false;
+        this.bottle_throw_sound.muted = false;
+    }
+
+    checkItemsSounds(getSound) {
+        const audioIconSwitch = document.getElementById('audioIconSwitch');
+    
+        switch (true) {
+            case (audioIconSwitch && audioIconSwitch.classList.contains('audio-off')):
+                this.muteItemSounds();
+                break;
+    
+            case (audioIconSwitch && audioIconSwitch.classList.contains('audio-on')):
+                this.unmuteItemSounds()
+                getSound.play();
+                break;
+    
+            default:
+                break;
+        }
     }
 }
