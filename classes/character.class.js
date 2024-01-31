@@ -99,15 +99,18 @@ class Character extends MovingObjects{
     
             if (this.world.control.RIGHT && this.x < this.world.level.level_end_x) {
                 this.goRight();
+                this.checkCharSounds(this.walking_sound);
             }
             if (this.world.control.LEFT && this.x > 0) {
                 this.goLeft();
+                this.checkCharSounds(this.walking_sound);
             }
             if (this.isHurt()) {
                 this.hurt_sound.play();
+                this.checkCharSounds(this.hurt_sound);
             }
             if (this.longIdleTimer >= this.longIdleThreshold) {
-                this.sleeping_sound.play();
+                this.checkCharSounds(this.sleeping_sound);
             }
             if (this.world.control.SPACE && !this.isJumpTrue()) {
                 this.jump();
@@ -152,7 +155,7 @@ class Character extends MovingObjects{
         }, 80);
     }
 
-    resetIdleTimer(){
+     resetIdleTimer(){
         this.idleTimer = 0;
         this.longIdleTimer = 0;
         this.sleeping_sound.pause();
@@ -173,5 +176,37 @@ class Character extends MovingObjects{
     
     jump(){
         this.speedY = 22;
+    }
+
+
+    
+    muteCharSounds(){
+        this.walking_sound.muted = true;
+        this.hurt_sound.muted = true;
+        this.sleeping_sound.muted = true;
+    }
+    
+    unmuteCharSounds(){
+        this.walking_sound.muted = false;
+        this.hurt_sound.muted = false;
+        this.sleeping_sound.muted = false;
+    }
+    
+    checkCharSounds(getSound) {
+        const audioIconSwitch = document.getElementById('audioIconSwitch');
+    
+        switch (true) {
+            case (audioIconSwitch && audioIconSwitch.classList.contains('audio-off')):
+                this.muteCharSounds();
+                break;
+    
+            case (audioIconSwitch && audioIconSwitch.classList.contains('audio-on')):
+                this.unmuteCharSounds()
+                getSound.play();
+                break;
+    
+            default:
+                break;
+        }
     }
 }
