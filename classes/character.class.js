@@ -109,6 +109,9 @@ class Character extends MovingObjects{
                 this.hurt_sound.play();
                 this.checkCharSounds(this.hurt_sound);
             }
+            if (this.isDead()) {
+                this.muteCharSounds();
+            }
             if (this.longIdleTimer >= this.longIdleThreshold) {
                 this.checkCharSounds(this.sleeping_sound);
             }
@@ -139,7 +142,6 @@ class Character extends MovingObjects{
         setInterval(() => {
             if (this.isDead()) {
                 this.playAnimation(this.IMAGES_DEAD);
-                this.resetIdleTimer();
             } else if (this.isHurt()) {
                 this.playAnimation(this.IMAGES_HURT);
                 this.resetIdleTimer();

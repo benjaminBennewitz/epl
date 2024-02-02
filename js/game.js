@@ -67,7 +67,7 @@ window.addEventListener('keyup',(e) => {
     }
 });
 
-let escapePressed = false;  // Variable, um zu überprüfen, ob die Escape-Taste bereits gedrückt wurde
+let escapePressed = false;
 
 function fullscreen(){
     let fullscreen = document.getElementById('fullscreen');
@@ -192,5 +192,11 @@ function checkAudio() {
 
         default:
             break;
+    }
+}
+
+function gameLost(){
+    if (world.character.life === 0) {
+        unmuteAll();
     }
 }

@@ -17,7 +17,7 @@ class MovingObjects extends DrawableObject{
     }
 
     hit(){
-        this.life -= 1;
+        this.life -= 10;
         if(this.life < 0){
             this.life = 0;
         }else{
@@ -40,6 +40,14 @@ class MovingObjects extends DrawableObject{
     }
 
     isDead(){
+        setTimeout(function() {
+            if (world.character.life === 0) {
+                document.getElementById('start').classList.add('hide');
+                document.getElementById('fullscreen').classList.add('hide');
+                document.getElementById('showControls').classList.add('hide');
+                document.getElementById('lost').classList.remove('hide');
+            }
+        }, 4000);
         return this.life == 0;
     }
 
