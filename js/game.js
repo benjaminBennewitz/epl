@@ -198,5 +198,14 @@ function checkAudio() {
 function gameLost(){
     if (world.character.life === 0) {
         unmuteAll();
+        setTimeout(function() {
+            if (world.character.life === 0) {
+                document.getElementById('start').classList.add('hide');
+                document.getElementById('fullscreen').classList.add('hide');
+                document.getElementById('showControls').classList.add('hide');
+                document.getElementById('lost').classList.remove('hide');
+                gameLost();
+            }
+        }, 4000);
     }
 }
