@@ -6,6 +6,7 @@ class World{
 
     character = new Character();
     statusBar = new StatusBar();
+    bossBar = new StatusBossBar();
     coinBar = new CoinBar();
     bottleBar = new BottleBar();
     coin_sound = new Audio('audio/coin.mp3');
@@ -36,6 +37,16 @@ class World{
             this.checkGetCoins();
             this.checkGetBottles();
         }, 200);
+
+        setInterval(() => {
+            this.activateEnboss();
+        }, 4000);
+    }
+
+    activateEnboss(){
+        if(this.character.x > 1600){
+            this.level.enemies[0].animate();
+        }
     }
 
     checkCollisionCharacter(){
@@ -43,7 +54,6 @@ class World{
             if(this.character.collisionDetection(enemy)){
                 this.character.hit();
                 this.statusBar.setPercentage(this.character.life);
-                console.log('Kollision erkannt mit', enemy, 'Leben:', this.character.life);
             }
         });
     }
@@ -56,7 +66,6 @@ class World{
                 this.checkItemsSounds(this.coin_sound);
                 coin.x = -1000;
                 coin.y = -1000;
-                console.log('Coin eingesammelt! Gesammelte Coins:', this.character.collectedCoins);
             }
         });
     }
@@ -69,7 +78,6 @@ class World{
                 this.checkItemsSounds(this.bottle_sound);
                 bottle.x = -1000;
                 bottle.y = -1000;
-                console.log('Bottle eingesammelt! Gesammelte Bottles:', this.character.collectedBottles);
             }
         });
     }
@@ -89,16 +97,11 @@ class World{
         this.objectsLoop(this.level.clouds);
 
         this.ctx.translate(-this.camera_x,0);
-        this.addToWorld(this.statusBar);
-        this.addToWorld(this.coinBar);
-        this.addToWorld(this.bottleBar);
+        this.addStatusBars();
         this.ctx.translate(this.camera_x,0);
 
         this.addToWorld(this.character);
-        this.objectsLoop(this.projectile);
-        this.objectsLoop(this.level.enemies);
-        this.objectsLoop(this.level.coins);
-        this.objectsLoop(this.level.bottles);
+        this.addObjects();
         
         this.ctx.translate(-this.camera_x,0);
 
@@ -106,6 +109,20 @@ class World{
         requestAnimationFrame(function(){
             self.draw();
         });
+    }
+
+    addStatusBars(){
+        this.addToWorld(this.statusBar);
+        this.addToWorld(this.bossBar);
+        this.addToWorld(this.coinBar);
+        this.addToWorld(this.bottleBar);
+    }
+
+    addObjects(){
+        this.objectsLoop(this.projectile);
+        this.objectsLoop(this.level.enemies);
+        this.objectsLoop(this.level.coins);
+        this.objectsLoop(this.level.bottles);
     }
 
     objectsLoop(objects){

@@ -40,6 +40,7 @@ class MovingObjects extends DrawableObject{
     }
 
     isDead(){
+        gameLost();
         return this.life == 0;
     }
 
