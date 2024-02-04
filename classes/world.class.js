@@ -33,6 +33,8 @@ class World{
     run(){
         setInterval(() => {
             this.checkCollisionCharacter();
+            this.checkCollisionBossBottle();
+            this.checkJumpOnEnemy();
             this.checkProjectiles();
             this.checkGetCoins();
             this.checkGetBottles();
@@ -40,12 +42,13 @@ class World{
 
         setInterval(() => {
             this.activateEnboss();
-        }, 4000);
+        }, 2000);
     }
 
     activateEnboss(){
-        if(this.character.x > 1600){
+        if(this.character.x > 1500){
             this.level.enemies[0].animate();
+            this.bossBar.x = 510;
         }
     }
 
@@ -54,6 +57,33 @@ class World{
             if(this.character.collisionDetection(enemy)){
                 this.character.hit();
                 this.statusBar.setPercentage(this.character.life);
+            }
+        });
+    }
+
+    checkCollisionBossBottle(){
+        this.projectile.forEach((bottle) => {
+            if(this.level.enemies[0].collisionDetection(bottle)){
+                this.level.enemies[0].hit();
+                this.bossBar.setPercentage(this.level.enemies[0].life);
+                bottle.x = -1000;
+                bottle.y = -1000;
+            }
+        });
+    }
+
+    checkJumpOnEnemy(){
+        this.level.enemies.forEach((enemy) => {
+            if(this.character.y + this.character.height < enemy.y + enemy.height &&
+                this.character.y + this.character.height > enemy.y &&
+                this.character.x + this.character.width +30 > enemy.x &&
+                this.character.x < enemy.x + enemy.width){
+                    this.character.jump();
+                    enemy.hit();
+                    setTimeout(() => {
+                        enemy.x = -1000;
+                        enemy.y = -1000;
+                    }, 500);
             }
         });
     }

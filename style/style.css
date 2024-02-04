@@ -40,6 +40,10 @@ body{
     z-index: 999;
 }
 
+.start.up{
+    z-index: 99999;
+}
+
 .start-screen{
     width: 720px;
     height: 480px;

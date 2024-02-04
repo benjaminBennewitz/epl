@@ -44,6 +44,11 @@ class MovingObjects extends DrawableObject{
         return this.life == 0;
     }
 
+    isDefeated(){
+        gameWon();
+        return this.life == 0;
+    }
+
     moveRight(){ 
         this.x += this.speed;
     }

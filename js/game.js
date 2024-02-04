@@ -3,9 +3,8 @@ let canvasHtml;
 let world;
 let control = new Control();
 
-bgMusic = new Audio('audio/level1_theme.mp3');
-bgChickenSounds = new Audio('audio/chicken_sounds.mp3');
 loseSound = new Audio('audio/lose.mp3');
+winSound = new Audio('audio/win_game.mp3');
 
 const audioIconSwitch = document.getElementById('audioIconSwitch');
 
@@ -125,32 +124,14 @@ function showControls(){
     document.getElementById('showControls').classList.toggle('hide');
 }
 
-function playBgMusic(){
-    bgMusic.play();
-    bgMusic.volume = 0.2;
-    bgMusic.loop = true;
-}
-
-function playBgSounds(){
-    bgChickenSounds.play();
-    bgChickenSounds.loop = true;
-}
-
-function playLoseSound(){
-    loseSound.play();
-    bgMusic.volume = 1.5;
-}
-
 function muteAll(){
-    bgMusic.muted = true;
-    bgChickenSounds.muted = true;
     loseSound.muted = true;
+    winSound.muted = true;
 }
 
 function unmuteAll(){
-    bgMusic.muted = false;
-    bgChickenSounds.muted = false;
     loseSound.muted = false;
+    winSound.muted = false;
 }
 
 function checkAudio() {
@@ -163,8 +144,6 @@ function checkAudio() {
 
         case (audioIconSwitch && audioIconSwitch.classList.contains('audio-on')):
             unmuteAll();
-            playBgMusic();
-            playBgSounds();
             break;
 
         default:
@@ -182,25 +161,25 @@ function gameLost(){
                 document.getElementById('lost').classList.remove('hide');
                 bgMusic.pause();
                 bgChickenSounds.pause();
+                boss_stage_sound.pause();
                 world.muteItemSounds();
                 killGame();
             }
-        }, 800);
+        }, 500);
 }
 
 function gameWon(){
     setTimeout(function() {
-        if (world.character.life === 0) {
+        if (world.level.enemies[0].life === 0) {
+            winSound.play();
+            winSound.volume = 0.2;
             document.getElementById('start').classList.add('hide');
             document.getElementById('fullscreen').classList.add('hide');
             document.getElementById('showControls').classList.add('hide');
             document.getElementById('won').classList.remove('hide');
-            bgMusic.pause();
-            bgChickenSounds.pause();
-            world.muteItemSounds();
             killGame();
         }
-    }, 800);
+    }, 600);
 }
 
 function restart(){
@@ -211,4 +190,9 @@ function killGame(){
     for (let i = 0; i < 9999; i++) {
         clearInterval(i);
     }
+    bgMusic.pause();
+    world.character.muteCharSounds();
+    bgChickenSounds.pause();
+    boss_stage_sound.pause();
+    world.muteItemSounds();
 }
