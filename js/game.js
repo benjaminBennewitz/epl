@@ -170,7 +170,7 @@ function gameLost(){
 
 function gameWon(){
     setTimeout(function() {
-        if (world.level.enemies[0].life === 0) {
+        if (world.level.boss[0].life === 0) {
             winSound.play();
             winSound.volume = 0.2;
             document.getElementById('start').classList.add('hide');
@@ -179,7 +179,7 @@ function gameWon(){
             document.getElementById('won').classList.remove('hide');
             killGame();
         }
-    }, 600);
+    }, 100);
 }
 
 function restart(){

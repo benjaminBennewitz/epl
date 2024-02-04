@@ -33,6 +33,7 @@ class World{
     run(){
         setInterval(() => {
             this.checkCollisionCharacter();
+            this.checkCollisionCharacterBoss();
             this.checkCollisionBossBottle();
             this.checkJumpOnEnemy();
             this.checkProjectiles();
@@ -47,7 +48,7 @@ class World{
 
     activateEnboss(){
         if(this.character.x > 1500){
-            this.level.enemies[0].animate();
+            this.level.boss[0].animate();
             this.bossBar.x = 510;
         }
     }
@@ -61,33 +62,52 @@ class World{
         });
     }
 
+    checkCollisionCharacterBoss(){
+        this.level.boss.forEach((enemy) => {
+            if(this.character.collisionDetection(enemy)){
+                this.character.hit();
+                this.statusBar.setPercentage(this.character.life);
+            }
+        });
+    }
+
     checkCollisionBossBottle(){
         this.projectile.forEach((bottle) => {
-            if(this.level.enemies[0].collisionDetection(bottle)){
-                this.level.enemies[0].hit();
-                this.bossBar.setPercentage(this.level.enemies[0].life);
+            if(this.level.boss[0].collisionDetection(bottle)){
+                this.level.boss[0].hit();
+                this.bossBar.setPercentage(this.level.boss[0].life);
                 bottle.x = -1000;
                 bottle.y = -1000;
             }
         });
     }
 
-    checkJumpOnEnemy(){
+    checkJumpOnEnemy() {
         this.level.enemies.forEach((enemy) => {
-            if(this.character.y + this.character.height < enemy.y + enemy.height &&
-                this.character.y + this.character.height > enemy.y &&
-                this.character.x + this.character.width +30 > enemy.x &&
-                this.character.x < enemy.x + enemy.width){
-                    this.character.jump();
-                    enemy.hit();
-                    setTimeout(() => {
-                        enemy.x = -1000;
-                        enemy.y = -1000;
-                    }, 500);
+            const characterBottom = this.character.y + this.character.height;
+            const characterLeft = this.character.x;
+            const characterRight = this.character.x + this.character.width;
+            const enemyTop = enemy.y;
+            const enemyLeft = enemy.x;
+            const enemyRight = enemy.x + enemy.width;
+
+            if (
+                characterBottom > enemy.y &&
+                characterRight > enemyLeft &&
+                characterLeft < enemyRight
+            ) {
+
+                this.character.jump();
+                enemy.hit();
+    
+                setTimeout(() => {
+                    enemy.x = -1000;
+                    enemy.y = -1000;
+                }, 500);
             }
         });
     }
-
+    
     checkGetCoins(){
         this.level.coins.forEach((coin) => {
             if(this.character.collisionDetection(coin)){
@@ -117,6 +137,7 @@ class World{
             let projectile = new Projectiles(this.character.x + 100, this.character.y + 100);
             this.projectile.push(projectile);
             this.checkItemsSounds(this.bottle_throw_sound);
+            this.bottles.throwBottleAnimations();
        }
     }
 
@@ -151,6 +172,7 @@ class World{
     addObjects(){
         this.objectsLoop(this.projectile);
         this.objectsLoop(this.level.enemies);
+        this.objectsLoop(this.level.boss);
         this.objectsLoop(this.level.coins);
         this.objectsLoop(this.level.bottles);
     }

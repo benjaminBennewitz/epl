@@ -9,9 +9,9 @@ class Character extends MovingObjects{
     acceleration = 1.5;
 
     idleTimer = 0;
-    idleThreshold = 1000;
+    idleThreshold = 2000;
     longIdleTimer = 0;
-    longIdleThreshold = 3500;
+    longIdleThreshold = 9500;
 
     IMAGES_WALKING = [
         'img/2_character_pepe/2_walk/W-21.png',
