@@ -55,16 +55,14 @@ class World{
     }
 
     checkCollisionCharacter() {
-        if (!this.character.isJumpTrue()) {
-            this.level.enemies.forEach((enemy) => {
-                if (enemy.enemyLife) {
-                    if (this.character.collisionDetection(enemy)) {
-                        this.character.hit();
-                        this.statusBar.setPercentage(this.character.life);
-                    }
+        this.level.enemies.forEach((enemy) => {
+            if (enemy.enemyLife) {
+                if (this.character.collisionDetection(enemy)) {
+                    this.character.hit();
+                    this.statusBar.setPercentage(this.character.life);
                 }
-            });
-        }
+            }
+        });
     } 
     
     checkCollisionCharacterBoss(){
@@ -96,25 +94,39 @@ class World{
             const enemyRight = enemy.x + enemy.width;
             
             if (characterBottom > enemy.y && characterRight > enemyLeft && characterLeft < enemyRight) {
-                this.character.offset = {
-                    top: 0,
-                    left: 0,
-                    right: -20,
-                    bottom: 100
-                };
+                this.offsetWhenJumping();
                 this.enemyLife(enemy);
-            }
+            }return
         });
     }
 
+    offsetWhenJumping(){
+        this.character.offset = {
+            top: 0,
+            left: 0,
+            right: -20,
+            bottom: 100
+        }
+    }
+
+    offsetWhenWalking(){
+        this.character.offset = {
+            top: 0,
+            left: 10,
+            right: -20,
+            bottom: 50
+        }
+    }
+
     enemyLife(enemy){
+        this.offsetWhenWalking();
         if (enemy.enemyLife) {
             enemy.hit();
             enemy.enemyLife = false;
             setTimeout(() => {
                 enemy.x = -1000;
                 enemy.y = -1000;
-            }, 600);
+            }, 100);
         }
     }
     

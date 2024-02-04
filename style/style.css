@@ -52,8 +52,7 @@ body{
 
 .control-img{
     margin-top: 24px;
-    min-width: 720px;
-    max-width: 720px;
+    max-width: 100%;
     height: auto;
 }
 
@@ -90,12 +89,16 @@ body{
 
 .audio-on{
     background:url('../img/10_sonstiges/audioOn.svg');
+    background-repeat: no-repeat;
+    background-size: contain;
     width: 32px;
     height: 32px;
 }
 
 .audio-off{
     background:url('../img/10_sonstiges/audioOff.svg');
+    background-repeat: no-repeat;
+    background-size: contain;
     width: 32px;
     height: 32px;
 }
@@ -210,12 +213,16 @@ canvas {
 
 .disable-fs{
     background:url('../img/10_sonstiges/full.svg');
+    background-repeat: no-repeat;
+    background-size: contain;
     width: 32px;
     height: 32px;
 }
 
 .activate-fs{
     background:url('../img/10_sonstiges/not-full.svg');
+    background-repeat: no-repeat;
+    background-size: contain;
     width: 32px;
     height: 32px;
 }
@@ -229,19 +236,110 @@ canvas {
     transform: translate(-50%, -50%);
 }
 
+#landscape{
+    width: 100%;
+    height: 100vh;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: url('../img/10_sonstiges/bg_blur.jpg') no-repeat center bottom;
+}
+
+.landscape{
+    width: 100%;
+    height:auto;
+    transform: rotate(90deg);
+}
+
+.hide-landscape{
+    display: none;
+}
+
+#mobileControl{
+    width:90%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    position: absolute;
+    bottom: 16px;
+}
+
+.gap{
+    display: flex;
+    gap:24px;
+}
+
+.mobile-controls{
+    height:40px;
+    width:40px;
+}
 
 /*Media Querrys*/
 @media only screen and (max-width: 720px) {
    canvas{
-        width: 100%;
+        width: 100vw;
    }
+   .start-screen {
+        max-width: 100%;
+        height: auto;
+    }
+    .start-wrapper{
+        max-width: 100%;
+        height: auto;
+    }
+    .start{
+        max-width: 100%;
+        height: auto;
+    }
    h1{
         display: none;
     }
+    .control-img {
+        display: none;
+    }
+    .game-btn{
+        margin-top: 0;
+        position: absolute;
+        top:16px;
+        width: 150px;
+        height: auto;
+        font-size: 16pt;
+        z-index: 9999;
+    }
+    .btn{
+        position: relative;
+        left:0;
+        top:50%;
+        width: 32px;
+        height: 32px;
+    }
+    .settings-btn{
+       flex-direction: column;
+       align-items: flex-start;
+       left:8px;
+       bottom:110px;
+
+    }
+    #activateFs{
+        display: none;
+    }
+    .audio-off, .audio-on, .disable-fs, .activate-fs{
+        width: 24px !important;
+        height: 24px !important;
+    }
 }
 
-@media only screen and (max-width: 480px) {
+@media only screen and (max-width: 500px) {
     canvas{
         height: 100vh;
+    }
+    .hide-landscape{
+        display: flex;
+    }
+    .landscape{
+        height:100%;
+        width: auto;
     }
  }

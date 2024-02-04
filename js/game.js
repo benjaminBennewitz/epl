@@ -196,3 +196,5 @@ function killGame(){
     boss_stage_sound.pause();
     world.muteItemSounds();
 }
+  
+  
