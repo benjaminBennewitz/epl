@@ -5,15 +5,16 @@ class MovingObjects extends DrawableObject{
     acceleration = 1.5;
     jumpAnimation = false;
     life = 100;
+    enemyLife = true;
     hitCount = 0;
     collectedCoins = 0;
     collectedBottles = 0;
 
-    collisionDetection(object){
-        return this.x + this.width > object.x &&
-               this.y + this.height > object.y &&
-               this.x < object.x &&
-               this.y < object.y + object.height -150;
+    collisionDetection(object) {
+        return this.x + this.width - this.offset.right > object.x + object.offset.left &&
+            this.y + this.height - this.offset.bottom > object.y + object.offset.top &&
+            this.x + this.offset.left < object.x + object.width - object.offset.right &&
+            this.y + this.offset.top < object.y + object.height - object.offset.bottom;
     }
 
     hit(){
@@ -49,7 +50,7 @@ class MovingObjects extends DrawableObject{
         return this.life == 0;
     }
 
-    moveRight(){ 
+     moveRight(){ 
         this.x += this.speed;
     }
 

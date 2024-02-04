@@ -15,6 +15,7 @@ class World{
     coins = new Coin();
     bottles = new Bottle();
     projectile = [];
+    throwedBottle = new Projectiles();
     level = level_1;
 
     constructor(canvas, control){
@@ -47,21 +48,25 @@ class World{
     }
 
     activateEnboss(){
-        if(this.character.x > 1500){
+        if(this.character.x > 1600){
             this.level.boss[0].animate();
             this.bossBar.x = 510;
         }
     }
 
-    checkCollisionCharacter(){
-        this.level.enemies.forEach((enemy) => {
-            if(this.character.collisionDetection(enemy)){
-                this.character.hit();
-                this.statusBar.setPercentage(this.character.life);
-            }
-        });
-    }
-
+    checkCollisionCharacter() {
+        if (!this.character.isJumpTrue()) {
+            this.level.enemies.forEach((enemy) => {
+                if (enemy.enemyLife) {
+                    if (this.character.collisionDetection(enemy)) {
+                        this.character.hit();
+                        this.statusBar.setPercentage(this.character.life);
+                    }
+                }
+            });
+        }
+    } 
+    
     checkCollisionCharacterBoss(){
         this.level.boss.forEach((enemy) => {
             if(this.character.collisionDetection(enemy)){
@@ -87,25 +92,30 @@ class World{
             const characterBottom = this.character.y + this.character.height;
             const characterLeft = this.character.x;
             const characterRight = this.character.x + this.character.width;
-            const enemyTop = enemy.y;
             const enemyLeft = enemy.x;
             const enemyRight = enemy.x + enemy.width;
-
-            if (
-                characterBottom > enemy.y &&
-                characterRight > enemyLeft &&
-                characterLeft < enemyRight
-            ) {
-
-                this.character.jump();
-                enemy.hit();
-    
-                setTimeout(() => {
-                    enemy.x = -1000;
-                    enemy.y = -1000;
-                }, 500);
+            
+            if (characterBottom > enemy.y && characterRight > enemyLeft && characterLeft < enemyRight) {
+                this.character.offset = {
+                    top: 0,
+                    left: 0,
+                    right: -20,
+                    bottom: 100
+                };
+                this.enemyLife(enemy);
             }
         });
+    }
+
+    enemyLife(enemy){
+        if (enemy.enemyLife) {
+            enemy.hit();
+            enemy.enemyLife = false;
+            setTimeout(() => {
+                enemy.x = -1000;
+                enemy.y = -1000;
+            }, 600);
+        }
     }
     
     checkGetCoins(){
@@ -134,11 +144,19 @@ class World{
 
     checkProjectiles(){
        if(this.control.D){
-            let projectile = new Projectiles(this.character.x + 100, this.character.y + 100);
+            let projectile = new Projectiles(this.character.x + 50, this.character.y + 100);
             this.projectile.push(projectile);
             this.checkItemsSounds(this.bottle_throw_sound);
-            this.bottles.throwBottleAnimations();
+            this.throwedBottle.throwBottleAnimations();
        }
+    }
+
+    checkProjectileHitBoss(){
+        this.projectile.forEach((bottle) => {
+            if(this.level.boss[0].collisionDetection(bottle)){
+                this.throwedBottle.throwBottleAnimations();
+            }
+        });
     }
 
     draw(){
@@ -170,9 +188,9 @@ class World{
     }
 
     addObjects(){
-        this.objectsLoop(this.projectile);
         this.objectsLoop(this.level.enemies);
         this.objectsLoop(this.level.boss);
+        this.objectsLoop(this.projectile);
         this.objectsLoop(this.level.coins);
         this.objectsLoop(this.level.bottles);
     }

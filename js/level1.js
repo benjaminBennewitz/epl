@@ -124,7 +124,7 @@ function initLevel(){
                 muteAll();
                 break;
     
-            case (world.character.x > 1500 && !bossStageHandled && audioIconSwitch.classList.contains('audio-on')):
+            case (world.character.x > 1600 && !bossStageHandled && audioIconSwitch.classList.contains('audio-on')):
                 handleBossStage();
                 return;
     

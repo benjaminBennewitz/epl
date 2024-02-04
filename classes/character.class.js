@@ -13,6 +13,13 @@ class Character extends MovingObjects{
     longIdleTimer = 0;
     longIdleThreshold = 9500;
 
+    offset = {
+        top: 0,
+        left: 0,
+        right: -20,
+        bottom: 15
+    };
+
     IMAGES_WALKING = [
         'img/2_character_pepe/2_walk/W-21.png',
         'img/2_character_pepe/2_walk/W-22.png',

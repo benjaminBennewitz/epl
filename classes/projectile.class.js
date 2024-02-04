@@ -30,26 +30,41 @@ class Projectiles extends MovingObjects{
     shoot(){
         this.speedY = 20;
         this.gravity();
-       // this.throwBottleAnimations();
+        this.throwBottleAnimations();
         setInterval(() => {
             this.x += 10;
         }, 25);
     }
 
-    /*throwBottleAnimations() {
-        let firstIntervalId, secondIntervalId;
-    
-        firstIntervalId = setInterval(() => {
+    throwBottleAnimations() {
+    let animationInterval = 80;
+    let animationFrames = this.IMAGES_THROWN.length;
+    let frameCount = 0;
+
+    let throwAnimation = () => {
+        if (frameCount === animationFrames && this.y < 480) {
+            this.playAnimation(this.IMAGES_BREAK);
+        } else {
             this.playAnimation(this.IMAGES_THROWN);
-        }, 80);
+            this.y -= this.speedY;
+        }
+
+        if (this.y >= 480) {
+            clearInterval(throwInterval);
+        }
+
+        frameCount++;
+    };
+
+    let throwInterval = setInterval(throwAnimation, animationInterval);
+}
+
     
-        secondIntervalId = setInterval(() => {
-            if (this.y < 90) {
-                this.playAnimation(this.IMAGES_BREAK);
     
-                clearInterval(firstIntervalId);
-            }
-        }, 1000/60);
-    }*/
+    
+    
+    
+    
+    
     
 }

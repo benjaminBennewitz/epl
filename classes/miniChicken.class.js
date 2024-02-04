@@ -1,8 +1,8 @@
 class MiniChicken extends MovingObjects{
 
-    height = 40;
-    width = 40;
-    y = 380;
+    height = 50;
+    width = 50;
+    y = 370;
 
     IMAGES_WALKING = [
         'img/3_enemies_chicken/chicken_small/1_walk/1_w.png',
