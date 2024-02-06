@@ -18,15 +18,15 @@ class Chicken extends MovingObjects{
         'img/3_enemies_chicken/chicken_normal/2_dead/dead.png',
     ];
 
-    /**
-     * Represents a Chicken object.
+   /**
+     * Represents a Chicken object and its position.
      * @constructor
      */
     constructor(){
         super().loadImg('img/3_enemies_chicken/chicken_normal/1_walk/1_w.png');
         this.loadImages(this.IMAGES_WALKING);
         this.loadImages(this.IMAGES_DEAD);
-        this.x = 800 + Math.random() * 1250;
+        this.x = 800 + Math.random() * (2050 - 800);
         this.speed = 0.25 + Math.random() * 0.85;
         this.animate();
     }

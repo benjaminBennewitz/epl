@@ -17,6 +17,13 @@ function init() {
     world = new World(canvas, control);
 }
 
+window.addEventListener("load",function() {
+    setTimeout(function(){
+        // This hides the address bar:
+        window.scrollTo(0, 1);
+    }, 0);
+});
+
 /**
  * Shows the canvas by removing the 'hide' class from the fullscreen element and adding it to the startScreen element.
  */

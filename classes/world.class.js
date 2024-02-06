@@ -18,6 +18,7 @@ class World {
     bottle_throw_sound = new Audio('audio/throw.mp3');
     coins = new Coin();
     bottles = new Bottle();
+    collectedBottles = [];
     projectile = [];
     throwedBottle = new Projectiles();
     level = level_1;
@@ -193,6 +194,7 @@ class World {
         this.level.bottles.forEach((bottle) => {
             if (this.character.collisionDetection(bottle)) {
                 this.character.collectBottle();
+                this.collectedBottles.push(bottle);
                 this.bottleBar.setCollectedBottles(this.character.collectedBottles);
                 this.checkItemsSounds(this.bottle_sound);
                 bottle.x = -1000;
@@ -207,9 +209,15 @@ class World {
     checkProjectiles() {
         if (this.control.D) {
             let projectile = new Projectiles(this.character.x + 50, this.character.y + 100);
-            this.projectile.push(projectile);
-            this.checkItemsSounds(this.bottle_throw_sound);
-            this.throwedBottle.throwBottleAnimations();
+
+            if (this.projectile.length < this.character.collectedBottles && this.character.collectedBottles > 0){
+                this.projectile.push(projectile);
+                this.character.collectedBottles -= 10;
+                this.bottleBar.setCollectedBottles(this.character.collectedBottles);
+                //this.bottleBar.setCollectedBottles(this.projectile);
+                this.checkItemsSounds(this.bottle_throw_sound);
+                this.throwedBottle.throwBottleAnimations();
+            }
         }
     }
 

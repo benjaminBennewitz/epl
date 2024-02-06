@@ -48,10 +48,17 @@ class MovingObjects extends DrawableObject{
     }
 
     /**
-     * Increases the number of collected bottles by 10.
+     * Increases the number of collected bottles by 1.
      */
     collectBottle(){
         this.collectedBottles += 10;
+    }
+
+    /**
+     * Increases the number of collected bottles by 1.
+     */
+    removeBottle(){
+        this.collectedBottles -= 10;
     }
 
     /**
