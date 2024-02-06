@@ -24,48 +24,75 @@ function showCanvas(){
     startScreen.classList.add('hide');
 }
 
-window.addEventListener('keydown',(e) => {
-    //console.log(e.keyCode);
-    if(e.keyCode == 39){
-        control.RIGHT = true;
-    }
-    if(e.keyCode == 37){
+
+document.addEventListener('DOMContentLoaded', (event) => {
+
+    window.addEventListener('keydown', (e) => {
+        handleKey(e.keyCode, true);
+    });
+
+    window.addEventListener('keyup', (e) => {
+        handleKey(e.keyCode, false);
+    });
+
+    document.getElementById('mobileLeft').addEventListener('touchstart', () => {
         control.LEFT = true;
-    }
-    if(e.keyCode == 32){
-        control.SPACE = true;
-    }
-    if(e.keyCode == 38){
-        control.UP = true;
-    }
-    if(e.keyCode == 40){
-        control.DOWN = true;
-    }
-    if(e.keyCode == 68){
+    });
+
+    document.getElementById('mobileLeft').addEventListener('touchend', () => {
+        control.LEFT = false;
+    });
+
+    document.getElementById('mobileThrow').addEventListener('touchstart', () => {
         control.D = true;
+    });
+
+    document.getElementById('mobileThrow').addEventListener('touchend', () => {
+        control.D = false;
+    });
+
+    document.getElementById('mobileJump').addEventListener('touchstart', () => {
+        control.SPACE = true;
+    });
+
+    document.getElementById('mobileJump').addEventListener('touchend', () => {
+        control.SPACE = false;
+    });
+
+    document.getElementById('mobileRight').addEventListener('touchstart', () => {
+        control.RIGHT = true;
+    });
+
+    document.getElementById('mobileRight').addEventListener('touchend', () => {
+        control.RIGHT = false;
+    });
+
+    function handleKey(keyCode, isPressed) {
+        switch (keyCode) {
+            case 39:
+                control.RIGHT = isPressed;
+                break;
+            case 37:
+                control.LEFT = isPressed;
+                break;
+            case 32:
+                control.SPACE = isPressed;
+                break;
+            case 38:
+                control.UP = isPressed;
+                break;
+            case 40:
+                control.DOWN = isPressed;
+                break;
+            case 68:
+                control.D = isPressed;
+                break;
+            default:
+                break;
+        }
     }
 });
 
-window.addEventListener('keyup',(e) => {
-    if(e.keyCode == 39){
-        control.RIGHT = false;
-    }
-    if(e.keyCode == 37){
-        control.LEFT = false;
-    }
-    if(e.keyCode == 32){
-        control.SPACE = false;
-    }
-    if(e.keyCode == 38){
-        control.UP = false;
-    }
-    if(e.keyCode == 40){
-        control.DOWN = false;
-    }
-    if(e.keyCode == 68){
-        control.D = false;
-    }
-});
 
 function fullscreen(){
     let fullscreen = document.getElementById('fullscreen');
