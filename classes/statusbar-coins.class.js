@@ -1,3 +1,8 @@
+/**
+ * Represents a coin bar in the game.
+ * @class
+ * @extends DrawableObject
+ */
 class CoinBar extends DrawableObject {
     
     IMAGES_COINS = [
@@ -11,6 +16,10 @@ class CoinBar extends DrawableObject {
 
     percentage = 0;
 
+    /**
+     * Represents the constructor of the StatusBarCoins class.
+     * @constructor
+     */
     constructor() {
         super();
         this.loadImages(this.IMAGES_COINS);
@@ -21,12 +30,20 @@ class CoinBar extends DrawableObject {
         this.setCollectedCoins(0);
     }
 
+    /**
+     * Sets the collected coins percentage and updates the image accordingly.
+     * @param {number} percentage - The percentage of collected coins.
+     */
     setCollectedCoins(percentage){
         this.percentage = percentage;
         let path = this.IMAGES_COINS[this.checkImgIndex()];
         this.img = this.images[path];
     }
 
+    /**
+     * Returns the image index based on the percentage value.
+     * @returns {number} The image index.
+     */
     checkImgIndex(){
         if(this.percentage == 100){
             return 5;

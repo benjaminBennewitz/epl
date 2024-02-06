@@ -1,3 +1,8 @@
+/**
+ * Represents a character in the game.
+ * @class
+ * @extends MovingObjects
+ */
 class Character extends MovingObjects{
 
     height = 300;
@@ -87,6 +92,10 @@ class Character extends MovingObjects{
     hurt_sound = new Audio('audio/hurt.mp3');
     sleeping_sound = new Audio('audio/sleeping.mp3');
 
+    /**
+     * Represents a character object.
+     * @constructor
+     */
     constructor(){
         super().loadImg('img/2_character_pepe/2_walk/W-21.png');
         this.loadImages(this.IMAGES_WALKING);
@@ -100,6 +109,9 @@ class Character extends MovingObjects{
         this.gravity();
     }
 
+    /**
+     * Animates the character by continuously executing a set of actions.
+     */
     animate() {
         setInterval(() => {
             this.walking_sound.pause();
@@ -133,18 +145,31 @@ class Character extends MovingObjects{
         this.characterAnimations();
     }
 
+    /**
+     * Moves the character to the right, turns around, and plays a walking sound.
+     */
     goRight(){
         this.moveRight();
         this.turnArround = false;
         this.walking_sound.play();
     }
 
+    /**
+     * Moves the character to the left, turns around, and plays a walking sound.
+     */
     goLeft(){
         this.moveLeft();
         this.turnArround = true;
         this.walking_sound.play();
     }
 
+    /**
+     * Plays different animations based on the character's state.
+     * @function characterAnimations
+     * @memberof Character
+     * @instance
+     * @returns {void}
+     */
     characterAnimations(){
         setInterval(() => {
             if (this.isDead()) {
@@ -164,6 +189,9 @@ class Character extends MovingObjects{
         }, 80);
     }
 
+    /**
+     * Resets the idle timer and stops the sleeping sound.
+     */
      resetIdleTimer(){
         this.idleTimer = 0;
         this.longIdleTimer = 0;
@@ -171,6 +199,9 @@ class Character extends MovingObjects{
         this.sleeping_sound.currentTime = 0;
     }
 
+    /**
+     * Plays the long idle animation based on the idle timer and long idle timer thresholds.
+     */
     playLongIdle(){
         this.idleTimer += 80;
         this.longIdleTimer += 80;
@@ -183,22 +214,35 @@ class Character extends MovingObjects{
         }
     }
     
+    /**
+     * Makes the character jump by setting the speedY property to 22.
+     */
     jump(){
         this.speedY = 22;
     }
 
+    /**
+     * Mutes the sounds of the character.
+     */
     muteCharSounds(){
         this.walking_sound.muted = true;
         this.hurt_sound.muted = true;
         this.sleeping_sound.muted = true;
     }
     
+    /**
+     * Unmutes the character sounds.
+     */
     unmuteCharSounds(){
         this.walking_sound.muted = false;
         this.hurt_sound.muted = false;
         this.sleeping_sound.muted = false;
     }
     
+    /**
+     * Checks the character sounds and performs actions based on the audio icon switch state.
+     * @param {HTMLAudioElement} getSound - The audio element to be played.
+     */
     checkCharSounds(getSound) {
         const audioIconSwitch = document.getElementById('audioIconSwitch');
     

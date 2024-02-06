@@ -1,3 +1,7 @@
+/**
+ * Represents a level in the game.
+ * @class
+ */
 class Level{
     boss;
     enemies;

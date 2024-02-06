@@ -1,3 +1,8 @@
+/**
+ * Represents an end boss in the game.
+ * @class
+ * @extends MovingObjects
+ */
 class Endboss extends MovingObjects {
 
     height = 400;
@@ -34,6 +39,12 @@ class Endboss extends MovingObjects {
         'img/4_enemie_boss_chicken/5_dead/G26.png',
     ];
 
+    hurt_sound = new Audio('audio/hurt-boss.mp3');
+
+    /**
+     * Represents the constructor of the EndBoss class.
+     * @constructor
+     */
     constructor() {
         super().loadImg('img/4_enemie_boss_chicken/2_alert/G5.png');
         this.loadImages(this.IMAGES_WALKING);
@@ -44,8 +55,10 @@ class Endboss extends MovingObjects {
         this.speed = 0.5;
     }
 
-    hurt_sound = new Audio('audio/hurt-boss.mp3');
-
+    /**
+     * Animates the end boss by continuously calling the moveLeft method at a rate of 60 frames per second.
+     * Also calls the bossStart method.
+     */
     animate(){
         setInterval(() => {
             this.moveLeft();
@@ -54,6 +67,9 @@ class Endboss extends MovingObjects {
         this.bossStart();
     }
 
+    /**
+     * Starts the boss behavior by setting up intervals for animations and checking for hurt status.
+     */
     bossStart(){
         setInterval(() => {
             this.playAnimation(this.IMAGES_WALKING);
@@ -74,6 +90,11 @@ class Endboss extends MovingObjects {
         this.bossAnimations();
     }
 
+    /**
+     * Executes boss animations at regular intervals.
+     * If the boss is hurt, it plays the hurt animation.
+     * If the boss is defeated, it plays the dead animation.
+     */
     bossAnimations(){
         setInterval(() => {
             if (this.isHurt()) {
@@ -85,14 +106,24 @@ class Endboss extends MovingObjects {
         }, 80);
     }
 
+    /**
+     * Mutes the character sounds.
+     */
     muteCharSounds(){
         this.hurt_sound.muted = true;
     }
     
+    /**
+     * Unmutes the character sounds.
+     */
     unmuteCharSounds(){
         this.hurt_sound.muted = false;
     }
     
+    /**
+     * Checks the character sounds and performs actions based on the audio icon switch state.
+     * @param {HTMLAudioElement} getSound - The sound to be played when the audio icon switch is on.
+     */
     checkCharSounds(getSound) {
         const audioIconSwitch = document.getElementById('audioIconSwitch');
     

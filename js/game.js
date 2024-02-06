@@ -2,21 +2,25 @@ let canvas;
 let canvasHtml;
 let world;
 let control = new Control();
-
-loseSound = new Audio('audio/lose.mp3');
-winSound = new Audio('audio/win_game.mp3');
-
+let loseSound = new Audio('audio/lose.mp3');
+let winSound = new Audio('audio/win_game.mp3');
 const audioIconSwitch = document.getElementById('audioIconSwitch');
 
-function init(){
+/**
+ * Initializes the game.
+ */
+function init() {
     setInterval(checkAudio, 1000);
     initLevel();
     showCanvas();
     canvas = document.getElementById('canvas');
-    world = new World(canvas,control);
+    world = new World(canvas, control);
 }
 
-function showCanvas(){
+/**
+ * Shows the canvas by removing the 'hide' class from the fullscreen element and adding it to the startScreen element.
+ */
+function showCanvas() {
     let fullscreen = document.getElementById('fullscreen');
     let startScreen = document.getElementById('start');
 
@@ -24,9 +28,9 @@ function showCanvas(){
     startScreen.classList.add('hide');
 }
 
+// Event listeners and handlers for the touch controls.
 
 document.addEventListener('DOMContentLoaded', (event) => {
-
     window.addEventListener('keydown', (e) => {
         handleKey(e.keyCode, true);
     });
@@ -67,6 +71,11 @@ document.addEventListener('DOMContentLoaded', (event) => {
         control.RIGHT = false;
     });
 
+    /**
+     * Handles the key events.
+     * @param {number} keyCode - The key code of the pressed key.
+     * @param {boolean} isPressed - Indicates whether the key is pressed or released.
+     */
     function handleKey(keyCode, isPressed) {
         switch (keyCode) {
             case 39:
@@ -93,74 +102,108 @@ document.addEventListener('DOMContentLoaded', (event) => {
     }
 });
 
-
-function fullscreen(){
+/**
+ * Enters fullscreen mode.
+ */
+function fullscreen() {
     let fullscreen = document.getElementById('fullscreen');
     document.getElementById('canvas').classList.add('fullscreen');
     document.getElementById('activateFs').classList.add('hide');
-    document.getElementById('disableFs').innerHTML = /*HTML*/`<button id='endFs' class="btn" onclick='exitFullscreen(),resetAll()'><div class="disable-fs"></div></button>`;
+    document.getElementById('disableFs').innerHTML = /*HTML*/ `<button id='endFs' class="btn" onclick='exitFullscreen(),resetAll()'><div class="disable-fs"></div></button>`;
     enterFullscreen(fullscreen);
 }
 
-function enterFullscreen(element){
-    if(element.requestFullscreen){
+/**
+ * Requests fullscreen mode for the specified element.
+ * @param {HTMLElement} element - The element to enter fullscreen mode.
+ */
+function enterFullscreen(element) {
+    if (element.requestFullscreen) {
         element.requestFullscreen();
-    } else if(element.webkitRequestFullscreen){
+    } else if (element.webkitRequestFullscreen) {
         element.webkitRequestFullscreen();
-    } else if(element.mozRequestFullScreen){
+    } else if (element.mozRequestFullScreen) {
         element.mozRequestFullScreen();
-    } else if(element.msRequestFullscreen){
+    } else if (element.msRequestFullscreen) {
         element.msRequestFullscreen();
     }
-}  
+}
 
-function exitFullscreen(){
-    if(document.exitFullscreen){
+/**
+ * Exits fullscreen mode.
+ */
+function exitFullscreen() {
+    if (document.exitFullscreen) {
         document.exitFullscreen();
-    } else if(document.webkitExitFullscreen){
+    } else if (document.webkitExitFullscreen) {
         document.webkitExitFullscreen();
-    } else if(document.mozCancelFullScreen){
+    } else if (document.mozCancelFullScreen) {
         document.mozCancelFullScreen();
-    } else if(document.msExitFullscreen){
+    } else if (document.msExitFullscreen) {
         document.msExitFullscreen();
     }
 }
 
-function resetAll(){
+/**
+ * Resets all fullscreen-related elements and settings.
+ */
+function resetAll() {
     let canvasHtml = document.getElementById('canvas');
     document.getElementById('endFs').style.display = 'none';
     document.getElementById('activateFs').classList.remove('hide');
     canvasHtml.classList.remove('fullscreen');
 }
 
-function audioOnOff(id){
+/**
+ * Toggles the audio on/off for the specified element.
+ * @param {string} id - The ID of the element.
+ */
+function audioOnOff(id) {
     document.getElementById(id).classList.toggle('audio-off');
 }
 
+/**
+ * Opens the story modal.
+ */
 function openModal() {
     var modal = document.getElementById('storyModal');
     modal.classList.remove('hide');
 }
 
+/**
+ * Closes the story modal.
+ */
 function closeModal() {
     var modal = document.getElementById('storyModal');
     modal.classList.add('hide');
 }
 
-function showControls(){
+/**
+ * Toggles the visibility of the controls.
+ */
+function showControls() {
     document.getElementById('showControls').classList.toggle('hide');
 }
 
-function muteAll(){
+/**
+ * Mutes all game sounds.
+ */
+function muteAll() {
     loseSound.muted = true;
     winSound.muted = true;
 }
 
-function unmuteAll(){
+/**
+ * Unmutes all game sounds.
+ */
+function unmuteAll() {
     loseSound.muted = false;
     winSound.muted = false;
 }
 
+/**
+ * Checks the audio settings and mutes/unmutes the game sounds accordingly.
+ */
 function checkAudio() {
     const audioIconSwitch = document.getElementById('audioIconSwitch');
 
@@ -178,25 +221,31 @@ function checkAudio() {
     }
 }
 
-function gameLost(){
-        setTimeout(function() {
-            if (world.character.life === 0) {
-                loseSound.play();
-                document.getElementById('start').classList.add('hide');
-                document.getElementById('fullscreen').classList.add('hide');
-                document.getElementById('showControls').classList.add('hide');
-                document.getElementById('lost').classList.remove('hide');
-                bgMusic.pause();
-                bgChickenSounds.pause();
-                boss_stage_sound.pause();
-                world.muteItemSounds();
-                killGame();
-            }
-        }, 500);
+/**
+ * Checks if the game is lost and performs the necessary actions.
+ */
+function gameLost() {
+    setTimeout(function () {
+        if (world.character.life === 0) {
+            loseSound.play();
+            document.getElementById('start').classList.add('hide');
+            document.getElementById('fullscreen').classList.add('hide');
+            document.getElementById('showControls').classList.add('hide');
+            document.getElementById('lost').classList.remove('hide');
+            bgMusic.pause();
+            bgChickenSounds.pause();
+            boss_stage_sound.pause();
+            world.muteItemSounds();
+            killGame();
+        }
+    }, 500);
 }
 
-function gameWon(){
-    setTimeout(function() {
+/**
+ * Checks if the game is won and performs the necessary actions.
+ */
+function gameWon() {
+    setTimeout(function () {
         if (world.level.boss[0].life === 0) {
             winSound.play();
             winSound.volume = 0.2;
@@ -209,11 +258,17 @@ function gameWon(){
     }, 100);
 }
 
-function restart(){
+/**
+ * Restarts the game by reloading the page.
+ */
+function restart() {
     window.location.reload();
 }
 
-function killGame(){
+/**
+ * Stops all game-related activities and sounds.
+ */
+function killGame() {
     for (let i = 0; i < 9999; i++) {
         clearInterval(i);
     }
@@ -223,5 +278,3 @@ function killGame(){
     boss_stage_sound.pause();
     world.muteItemSounds();
 }
-  
-  

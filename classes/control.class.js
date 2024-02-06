@@ -1,3 +1,7 @@
+/**
+ * Represents a control class.
+ * @class
+ */
 class Control{
     LEFT = false;
     RIGHT = false;

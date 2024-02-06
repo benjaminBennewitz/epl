@@ -144,8 +144,8 @@ body{
 }
 
 .modal{
-    width: 720px;
-    height: 480px;
+    width: 75%;
+    height: 75%;
     background-color: tomato;
     color:black;
     z-index: 9999;
@@ -162,16 +162,16 @@ body{
 }
 
 .modal-content{
-    width: 70%;
-    height: 70%;
+    width: 80%;
+    height: 80%;
 }
 
 .modal-content h1{
-    font-size: 20pt;
+    font-size: 18pt;
 }
 
 .modal-content p{
-    font-size: 16pt;
+    font-size: 14pt;
 }
 
 .close-btn{

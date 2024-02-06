@@ -5,6 +5,9 @@ bgMusic = new Audio('audio/level1_theme.mp3');
 bgChickenSounds = new Audio('audio/chicken_sounds.mp3');
 boss_stage_sound = new Audio('audio/boss_stage.mp3');
 
+/**
+ * Initializes the level.
+ */
 function initLevel(){
     setInterval(checkAudio, 1000);
     
@@ -89,33 +92,51 @@ function initLevel(){
         new Background('img/5_background/layers/1_first_layer/2.png', 719*3)
     ]);
 
+    /**
+     * Plays the background music.
+     */
     function playBgMusic(){
         bgMusic.play();
         bgMusic.volume = 0.2;
         bgMusic.loop = true;
     }
     
+    /**
+     * Plays background sounds.
+     */
     function playBgSounds(){
         bgChickenSounds.play();
         bgChickenSounds.loop = true;
     }
 
+    /**
+     * Plays the boss stage sound with a volume of 0.1.
+     */
     function playBossStage(){
         boss_stage_sound.play();
         boss_stage_sound.volume = 0.1;
     }
     
+    /**
+     * Mutes all background music and sounds.
+     */
     function muteAll(){
         bgMusic.muted = true;
         bgChickenSounds.muted = true;
         boss_stage_sound.muted = true;
     }
     
+    /**
+     * Unmutes all background sounds.
+     */
     function unmuteAll(){
         bgMusic.muted = false;
         bgChickenSounds.muted = false;
     }
 
+    /**
+     * Checks the audio settings and performs corresponding actions based on the conditions.
+     */
     function checkAudio() {
         const audioIconSwitch = document.getElementById('audioIconSwitch');
     
@@ -141,6 +162,9 @@ function initLevel(){
         }
     }
     
+    /**
+     * Handles the boss stage.
+     */
     function handleBossStage() {
         playBossStage();
         bgMusic.muted = true;

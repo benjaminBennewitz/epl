@@ -1,3 +1,8 @@
+/**
+ * Represents a projectile in the game.
+ * @class
+ * @extends MovingObjects
+ */
 class Projectiles extends MovingObjects{
 
     IMAGES_THROWN = [
@@ -16,6 +21,12 @@ class Projectiles extends MovingObjects{
         'img/6_salsa_bottle/bottle_rotation/bottle_splash/6_bottle_splash.png',
     ]
 
+    /**
+     * Represents a Projectile object.
+     * @constructor
+     * @param {number} x - The x-coordinate of the projectile.
+     * @param {number} y - The y-coordinate of the projectile.
+     */
     constructor(x, y){
         super().loadImg('img/6_salsa_bottle/salsa_bottle.png');
         this.loadImages(this.IMAGES_THROWN);
@@ -27,6 +38,10 @@ class Projectiles extends MovingObjects{
         this.shoot();
     }
 
+    /**
+     * Shoots the projectile.
+     * @returns {void}
+     */
     shoot(){
         this.speedY = 20;
         this.gravity();
@@ -36,6 +51,9 @@ class Projectiles extends MovingObjects{
         }, 25);
     }
 
+    /**
+     * Plays the throw bottle animations and updates the position of the projectile.
+     */
     throwBottleAnimations() {
         let animationInterval = 80;
         let animationFrames = this.IMAGES_THROWN.length;

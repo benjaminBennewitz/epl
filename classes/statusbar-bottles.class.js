@@ -1,3 +1,8 @@
+/**
+ * Represents a bottle bar object that extends the DrawableObject class.
+ * @class
+ * @extends DrawableObject
+ */
 class BottleBar extends DrawableObject {
 
     IMAGES_BOTTLES = [
@@ -11,6 +16,10 @@ class BottleBar extends DrawableObject {
 
     percentage = 0;
 
+    /**
+     * Represents a status bar for bottles.
+     * @constructor
+     */
     constructor() {
         super();
         this.loadImages(this.IMAGES_BOTTLES);
@@ -21,12 +30,20 @@ class BottleBar extends DrawableObject {
         this.setCollectedBottles(0);
     }
 
+    /**
+     * Sets the percentage of collected bottles and updates the image accordingly.
+     * @param {number} percentage - The percentage of collected bottles.
+     */
     setCollectedBottles(percentage){
         this.percentage = percentage;
         let path = this.IMAGES_BOTTLES[this.checkImgIndex()];
         this.img = this.images[path];
     }
     
+    /**
+     * Determines the image index based on the percentage value.
+     * @returns {number} The image index.
+     */
     checkImgIndex(){
         if(this.percentage == 100){
             return 5;
