@@ -11,6 +11,13 @@ const audioIconSwitch = document.getElementById('audioIconSwitch');
  */
 function init() {
     setInterval(checkAudio, 1000);
+    
+    const savedAudioState = localStorage.getItem('audioState');
+
+    if (savedAudioState === 'off') {
+        audioOnOff('audioIconSwitch');
+    }
+
     initLevel();
     showCanvas();
     canvas = document.getElementById('canvas');
@@ -217,10 +224,12 @@ function checkAudio() {
     switch (true) {
         case (audioIconSwitch && audioIconSwitch.classList.contains('audio-off')):
             muteAll();
+            localStorage.setItem('audioState', 'off');
             break;
 
         case (audioIconSwitch && audioIconSwitch.classList.contains('audio-on')):
             unmuteAll();
+            localStorage.setItem('audioState', 'on');
             break;
 
         default:

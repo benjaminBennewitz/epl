@@ -18,11 +18,13 @@ class Character extends MovingObjects{
     longIdleTimer = 0;
     longIdleThreshold = 9500;
 
+    isJumpingTrue = false;
+
     offset = {
         top: 0,
-        left: 10,
-        right: -20,
-        bottom: 50
+        left: 0,
+        right: 0,
+        bottom: 0
     };
 
     IMAGES_WALKING = [
@@ -146,21 +148,53 @@ class Character extends MovingObjects{
     }
 
     /**
+     * Sets the character's offset based on the current state.
+     */
+    setCharacterOffset() {
+        if (!this.isJumpingTrue) {
+            this.walkingOffset();
+        }
+    }
+
+    /**
      * Moves the character to the right, turns around, and plays a walking sound.
      */
-    goRight(){
-        this.moveRight();
-        this.turnArround = false;
-        this.walking_sound.play();
+    goRight() {
+        if (!this.isJumping && control.RIGHT) {
+            this.moveRight();
+            this.turnArround = false;
+            this.walking_sound.play();
+            this.setCharacterOffset();
+        }
+    }
+
+    /**
+     * Sets the character's offset to the default walking offset.
+     * @function walkingOffset
+     * @memberof Character
+     * @example
+     * walkingOffset();
+     * returns { top: 110, left: 0, right: 0, bottom: 10 }
+    */    
+    walkingOffset(){
+        this.offset = {
+            top: 110,
+            left: 0,
+            right: 0,
+            bottom: -220
+        }
     }
 
     /**
      * Moves the character to the left, turns around, and plays a walking sound.
      */
     goLeft(){
-        this.moveLeft();
-        this.turnArround = true;
-        this.walking_sound.play();
+        if (!this.isJumping && control.LEFT) {
+            this.moveLeft();
+            this.turnArround = true;
+            this.walking_sound.play();
+            this.setCharacterOffset();
+        }
     }
 
     /**
@@ -186,7 +220,7 @@ class Character extends MovingObjects{
             } else {
                 this.playLongIdle();
             }
-        }, 80);
+        }, 100);
     }
 
     /**
@@ -213,12 +247,22 @@ class Character extends MovingObjects{
             this.playAnimation(this.IMAGES_LONGIDLE);
         }
     }
-    
+
     /**
      * Makes the character jump by setting the speedY property to 22.
      */
-    jump(){
+    jump() {
         this.speedY = 22;
+        this.offset = {
+            top: 20,
+            left: 0,
+            right: 0,
+            bottom: -50
+        }
+        this.isJumpingTrue = true;
+        setTimeout(() => {
+            this.isJumpingTrue = false;
+        }, 1200);
     }
 
     /**

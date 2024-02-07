@@ -72,14 +72,5 @@ class Projectiles extends MovingObjects{
             frameCount++;
         };
         let throwInterval = setInterval(throwAnimation, animationInterval);
-}
-
-    
-    
-    
-    
-    
-    
-    
-    
+    }
 }

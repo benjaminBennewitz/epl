@@ -12,17 +12,16 @@ class Coin extends DrawableObject {
     width = 80;
    
     /**
- * Represents a Coin object and its position.
- * @constructor
- */
-constructor(){
-    super().loadImg('img/8_coin/coin_1.png');
-    this.loadImages(this.IMAGES_COINS);
-    this.x = 500 + Math.random() * (2000 - 500);
-    this.y = 100 + Math.random() * 150;
-    this.animate();
-}
-
+     * Represents a Coin object and its position.
+     * @constructor
+     */
+    constructor(){
+        super().loadImg('img/8_coin/coin_1.png');
+        this.loadImages(this.IMAGES_COINS);
+        this.x = 500 + Math.random() * (2000 - 500);
+        this.y = 50 + Math.random() * (250 - 100);
+        this.animate();
+    }    
 
     /**
      * Animates the coin by repeatedly calling the playAnimation method.

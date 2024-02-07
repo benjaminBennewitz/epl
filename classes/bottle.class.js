@@ -12,9 +12,9 @@ class Bottle extends DrawableObject {
     width = 70;
 
     offset = {
-        top: -50,
-        left: -5,
-        right: 10,
+        top: 0,
+        left: 15,
+        right: -15,
         bottom: 0
     };
    
@@ -25,10 +25,10 @@ class Bottle extends DrawableObject {
     constructor(){
         super().loadImg('img/6_salsa_bottle/1_salsa_bottle_on_ground.png');
         this.loadImages(this.IMAGES_BOTTLES);
-        this.x = 700 + Math.random() * (2700 - 700);
+        this.x = 400 + Math.random() * (2000 - 500);
         this.y = 350;
         this.animate();
-    }
+    }    
 
     /**
      * Animates the bottle by repeatedly playing the animation.

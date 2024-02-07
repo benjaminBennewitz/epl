@@ -1,10 +1,6 @@
 let level_1;
 let bossStageHandled = false;
 
-bgMusic = new Audio('audio/level1_theme.mp3');
-bgChickenSounds = new Audio('audio/chicken_sounds.mp3');
-boss_stage_sound = new Audio('audio/boss_stage.mp3');
-
 /**
  * Initializes the level.
  */
@@ -133,6 +129,10 @@ function initLevel(){
         bgMusic.muted = false;
         bgChickenSounds.muted = false;
     }
+
+    bgMusic = new Audio('audio/level1_theme.mp3');
+    bgChickenSounds = new Audio('audio/chicken_sounds.mp3');
+    boss_stage_sound = new Audio('audio/boss_stage.mp3');
 
     /**
      * Checks the audio settings and performs corresponding actions based on the conditions.

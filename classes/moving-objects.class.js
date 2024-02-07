@@ -67,7 +67,7 @@ class MovingObjects extends DrawableObject{
      */
     isHurt(){
         let checkHits = new Date().getTime() - this.hitCount;
-        checkHits = checkHits / 1000;
+        checkHits = checkHits / 300;
         return checkHits < 1;
     }
 

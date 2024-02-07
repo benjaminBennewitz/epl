@@ -35,6 +35,13 @@ class World {
         this.draw();
         this.setWorld();
         this.run();
+        this.checkLevelEnd();
+    }
+
+    checkLevelEnd(){
+        setInterval(() => {
+            this.level.level_end_x = 2200;
+        }, 200);
     }
 
     /**
@@ -53,6 +60,8 @@ class World {
             this.checkCollisionCharacter();
             this.checkCollisionCharacterBoss();
             this.checkCollisionBossBottle();
+            this.checkProjectileHitBoss();
+            this.checkCollisionChickenBottle();
             this.checkJumpOnEnemy();
             this.checkProjectiles();
             this.checkGetCoins();
@@ -96,6 +105,7 @@ class World {
             if (this.character.collisionDetection(enemy)) {
                 this.character.hit();
                 this.statusBar.setPercentage(this.character.life);
+                this.character.x = this.character.x - 20;
             }
         });
     }
@@ -115,6 +125,27 @@ class World {
     }
 
     /**
+     * Checks for collision between the chickens and the projectile bottles.
+     */
+    checkCollisionChickenBottle() {
+        this.projectile.forEach((bottle) => {
+            this.level.enemies.forEach((enemy) => {
+                if (enemy.enemyLife) {
+                    if (enemy.collisionDetection(bottle)) {
+                        enemy.hit();
+                        bottle.x = -1000;
+                        bottle.y = -1000;
+                        setInterval(() => {
+                            enemy.x = -1000;
+                            enemy.y = -1000;
+                        },250);
+                    }
+                }
+            });
+        });
+    }
+
+    /**
      * Checks if the character jumps on an enemy and performs necessary actions.
      */
     checkJumpOnEnemy() {
@@ -122,38 +153,20 @@ class World {
             const characterBottom = this.character.y + this.character.height;
             const characterLeft = this.character.x;
             const characterRight = this.character.x + this.character.width;
+            const enemyTop = enemy.y;
             const enemyLeft = enemy.x;
             const enemyRight = enemy.x + enemy.width;
-
-            if (characterBottom > enemy.y && characterRight > enemyLeft && characterLeft < enemyRight) {
-                this.offsetWhenJumping();
+    
+            if (
+                characterBottom >= enemyTop &&
+                this.character.y < enemyTop && // Überprüfe, ob der Charakter über dem Feind ist
+                characterRight > enemyLeft &&
+                characterLeft < enemyRight
+            ) {
                 this.enemyLife(enemy);
-            } return
+                this.character.jump(); // Optional: Füge hier die Logik für den Sprung des Charakters hinzu
+            }
         });
-    }
-
-    /**
-     * Sets the offset values for the character when jumping.
-     */
-    offsetWhenJumping() {
-        this.character.offset = {
-            top: 0,
-            left: 20,
-            right: 20,
-            bottom: 100
-        }
-    }
-
-    /**
-     * Sets the offset values for the character when walking.
-     */
-    offsetWhenWalking() {
-        this.character.offset = {
-            top: 0,
-            left: 10,
-            right: -20,
-            bottom: 50
-        }
     }
 
     /**
@@ -161,7 +174,6 @@ class World {
      * @param {Object} enemy - The enemy object.
      */
     enemyLife(enemy) {
-        this.offsetWhenWalking();
         if (enemy.enemyLife) {
             enemy.hit();
             enemy.enemyLife = false;
@@ -237,6 +249,7 @@ class World {
      */
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        
         this.ctx.translate(this.camera_x, 0);
         this.objectsLoop(this.level.backgroundObjects);
         this.objectsLoop(this.level.clouds);
@@ -295,9 +308,8 @@ class World {
         if (object.turnArround) {
             this.flipImage(object);
         }
-
         object.draw(this.ctx);
-        object.collisionBorder(this.ctx);
+        //object.collisionBorder(this.ctx);
 
         if (object.turnArround) {
             this.flipImageBack(object);
