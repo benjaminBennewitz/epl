@@ -55,22 +55,14 @@ class Projectiles extends MovingObjects{
      * Plays the throw bottle animations and updates the position of the projectile.
      */
     throwBottleAnimations() {
-        let animationInterval = 80;
-        let animationFrames = this.IMAGES_THROWN.length;
-        let frameCount = 0;
+        setInterval(() => {
+            this.playAnimation(this.IMAGES_THROWN);
+        }, 100);
+    }
 
-        let throwAnimation = () => {
-            if (frameCount === animationFrames && this.y < 480) {
-                this.playAnimation(this.IMAGES_BREAK);
-            } else {
-                this.playAnimation(this.IMAGES_THROWN);
-                this.y -= this.speedY;
-            }
-            if (this.y >= 480) {
-                clearInterval(throwInterval);
-            }
-            frameCount++;
-        };
-        let throwInterval = setInterval(throwAnimation, animationInterval);
+    bottleBreak(){
+        setInterval(() => {
+            this.playAnimation(this.IMAGES_BREAK);
+        }, 500);
     }
 }

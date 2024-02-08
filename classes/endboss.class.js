@@ -8,6 +8,7 @@ class Endboss extends MovingObjects {
     height = 400;
     width = 400;
     y = 45;
+    life = 80;
 
     IMAGES_WALKING = [
         'img/4_enemie_boss_chicken/1_walk/G1.png',

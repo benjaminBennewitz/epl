@@ -7,6 +7,7 @@ class Character extends MovingObjects{
 
     height = 300;
     y = 135;
+    life = 500;
     world;
     speed = 10;
     audioSpeed = 1.5;
@@ -17,8 +18,6 @@ class Character extends MovingObjects{
     idleThreshold = 2000;
     longIdleTimer = 0;
     longIdleThreshold = 9500;
-
-    isJumpingTrue = false;
 
     offset = {
         top: 0,
@@ -255,14 +254,10 @@ class Character extends MovingObjects{
         this.speedY = 22;
         this.offset = {
             top: 20,
-            left: 0,
-            right: 0,
-            bottom: -50
+            left: 5,
+            right: -5,
+            bottom: 50
         }
-        this.isJumpingTrue = true;
-        setTimeout(() => {
-            this.isJumpingTrue = false;
-        }, 1200);
     }
 
     /**

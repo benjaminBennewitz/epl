@@ -19,11 +19,13 @@ class Chicken extends MovingObjects{
     ];
 
     offset = {
-        top: -5,
-        left: -5,
+        top: 0,
+        left: 0,
         right: 0,
         bottom: 0
     };
+
+    life = 1;
 
    /**
      * Represents a Chicken object and its position.
@@ -49,18 +51,14 @@ class Chicken extends MovingObjects{
         setInterval(() => {
             this.playAnimation(this.IMAGES_WALKING);
         },200);
-        this.chickenAnimations();
+        this.chickenDeadImg();
     }
 
     /**
      * Executes chicken animations at regular intervals.
      * If the chicken is hurt, it plays the dead animation.
      */
-    chickenAnimations(){
-        setInterval(() => {
-            if (this.isHurt()) {
-                this.playAnimation(this.IMAGES_DEAD);
-            }
-        }, 80);
+    chickenDeadImg(){
+        this.loadImg(this.IMAGES_DEAD);
     }
 }

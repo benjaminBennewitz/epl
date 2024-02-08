@@ -62,7 +62,6 @@ class World {
             this.checkCollisionBossBottle();
             this.checkProjectileHitBoss();
             this.checkCollisionChickenBottle();
-            this.checkJumpOnEnemy();
             this.checkProjectiles();
             this.checkGetCoins();
             this.checkGetBottles();
@@ -88,8 +87,14 @@ class World {
      */
     checkCollisionCharacter() {
         this.level.enemies.forEach((enemy) => {
-            if (enemy.enemyLife) {
-                if (this.character.collisionDetection(enemy)) {
+            if (!enemy.isDead() && this.character.collisionDetection(enemy)) {
+                if (this.character.isJumpTrue() && !this.character.isHurt()) {
+                    enemy.chickenDeadImg();
+                    setTimeout(() => {
+                        enemy.x = -1000;
+                        enemy.y = -1000;
+                    }, 200);
+                } else {
                     this.character.hit();
                     this.statusBar.setPercentage(this.character.life);
                 }
@@ -105,7 +110,7 @@ class World {
             if (this.character.collisionDetection(enemy)) {
                 this.character.hit();
                 this.statusBar.setPercentage(this.character.life);
-                this.character.x = this.character.x - 20;
+                this.character.x = this.character.x - 30;
             }
         });
     }
@@ -117,6 +122,7 @@ class World {
         this.projectile.forEach((bottle) => {
             if (this.level.boss[0].collisionDetection(bottle)) {
                 this.level.boss[0].hit();
+                bottle.bottleBreak();
                 this.bossBar.setPercentage(this.level.boss[0].life);
                 bottle.x = -1000;
                 bottle.y = -1000;
@@ -130,58 +136,20 @@ class World {
     checkCollisionChickenBottle() {
         this.projectile.forEach((bottle) => {
             this.level.enemies.forEach((enemy) => {
-                if (enemy.enemyLife) {
+                if (enemy.life > 0) {
                     if (enemy.collisionDetection(bottle)) {
-                        enemy.hit();
+                        bottle.bottleBreak();
+                        enemy.chickenDeadImg();
                         bottle.x = -1000;
                         bottle.y = -1000;
                         setInterval(() => {
                             enemy.x = -1000;
                             enemy.y = -1000;
-                        },250);
+                        },100);
                     }
                 }
             });
         });
-    }
-
-    /**
-     * Checks if the character jumps on an enemy and performs necessary actions.
-     */
-    checkJumpOnEnemy() {
-        this.level.enemies.forEach((enemy) => {
-            const characterBottom = this.character.y + this.character.height;
-            const characterLeft = this.character.x;
-            const characterRight = this.character.x + this.character.width;
-            const enemyTop = enemy.y;
-            const enemyLeft = enemy.x;
-            const enemyRight = enemy.x + enemy.width;
-    
-            if (
-                characterBottom >= enemyTop &&
-                this.character.y < enemyTop && // Überprüfe, ob der Charakter über dem Feind ist
-                characterRight > enemyLeft &&
-                characterLeft < enemyRight
-            ) {
-                this.enemyLife(enemy);
-                this.character.jump(); // Optional: Füge hier die Logik für den Sprung des Charakters hinzu
-            }
-        });
-    }
-
-    /**
-     * Updates the enemy's life status and performs necessary actions if the enemy is defeated.
-     * @param {Object} enemy - The enemy object.
-     */
-    enemyLife(enemy) {
-        if (enemy.enemyLife) {
-            enemy.hit();
-            enemy.enemyLife = false;
-            setTimeout(() => {
-                enemy.x = -1000;
-                enemy.y = -1000;
-            }, 100);
-        }
     }
 
     /**
@@ -226,7 +194,6 @@ class World {
                 this.projectile.push(projectile);
                 this.character.collectedBottles -= 10;
                 this.bottleBar.setCollectedBottles(this.character.collectedBottles);
-                //this.bottleBar.setCollectedBottles(this.projectile);
                 this.checkItemsSounds(this.bottle_throw_sound);
                 this.throwedBottle.throwBottleAnimations();
             }
@@ -239,7 +206,7 @@ class World {
     checkProjectileHitBoss() {
         this.projectile.forEach((bottle) => {
             if (this.level.boss[0].collisionDetection(bottle)) {
-                this.throwedBottle.throwBottleAnimations();
+                this.throwedBottle.bottleBreak();
             }
         });
     }

@@ -8,9 +8,7 @@ class MovingObjects extends DrawableObject{
     turnArround = false;
     speedY = 0;
     acceleration = 1.5;
-    jumpAnimation = false;
-    life = 100;
-    enemyLife = true;
+    life = 1000;
     hitCount = 0;
     collectedCoins = 0;
     collectedBottles = 0;
@@ -135,7 +133,7 @@ class MovingObjects extends DrawableObject{
         if(this instanceof Projectiles){
             return true;
         } else {
-            return this.y < 120;
+            return this.y <= 120;
         }
     }
 

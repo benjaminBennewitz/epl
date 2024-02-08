@@ -8,8 +8,8 @@ class Coin extends DrawableObject {
         'img/8_coin/coin_2.png'
     ];
 
-    height = 80;
-    width = 80;
+    height = 60;
+    width = 60;
    
     /**
      * Represents a Coin object and its position.

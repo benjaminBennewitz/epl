@@ -7,6 +7,15 @@ class MiniChicken extends MovingObjects{
     height = 50;
     width = 50;
     y = 370
+
+    offset = {
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0
+    };
+
+    life = 1;
     
     IMAGES_WALKING = [
         'img/3_enemies_chicken/chicken_small/1_walk/1_w.png',
@@ -42,18 +51,14 @@ class MiniChicken extends MovingObjects{
         setInterval(() => {
             this.playAnimation(this.IMAGES_WALKING);
         },200);
-        this.chickenAnimations();
+        this.chickenDeadImg();
     }
 
     /**
      * Executes chicken animations at regular intervals.
      * If the chicken is hurt, it plays the dead animation.
      */
-    chickenAnimations(){
-        setInterval(() => {
-            if (this.isHurt()) {
-                this.playAnimation(this.IMAGES_DEAD);
-            }
-        }, 80);
+    chickenDeadImg(){
+        this.loadImg(this.IMAGES_DEAD);
     }
 }
