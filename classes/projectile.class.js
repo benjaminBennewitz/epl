@@ -35,17 +35,17 @@ class Projectiles extends MovingObjects{
         this.y = y;
         this.height = 70;
         this.width = 70;
-        this.shoot();
+        this.animate();
     }
 
     /**
      * Shoots the projectile.
      * @returns {void}
      */
-    shoot(){
+    animate(){
         this.speedY = 20;
         this.gravity();
-        this.throwBottleAnimations();
+        this.throwAnimation();
         setInterval(() => {
             this.x += 10;
         }, 25);
@@ -54,15 +54,31 @@ class Projectiles extends MovingObjects{
     /**
      * Plays the throw bottle animations and updates the position of the projectile.
      */
-    throwBottleAnimations() {
+    throwAnimation() {
         setInterval(() => {
             this.playAnimation(this.IMAGES_THROWN);
         }, 100);
     }
 
     bottleBreak(){
-        setInterval(() => {
+        let splash_interval = setInterval(() => {
             this.playAnimation(this.IMAGES_BREAK);
-        }, 500);
+            if(this.currentImage == this.IMAGES_BREAK.length - 1){
+                clearInterval(splash_interval);
+                splash_interval = null;
+                this.isFadingOut=true
+            }
+        }, 1000 / 60);
+    }
+
+    /**
+     * Plays the animation by updating the image of the bottle.
+     * @param {string[]} images - An array of image paths.
+     */
+    playAnimation(images) {
+        let i = this.currentImage % images.length;
+        let path = images[i];
+        this.img = this.images[path];
+        this.currentImage++;
     }
 }

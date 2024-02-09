@@ -88,18 +88,33 @@ class World {
     checkCollisionCharacter() {
         this.level.enemies.forEach((enemy) => {
             if (!enemy.isDead() && this.character.collisionDetection(enemy)) {
-                if (this.character.isJumpTrue() && !this.character.isHurt()) {
+                const characterBottom = this.character.y + this.character.height;
+                const enemyTop = enemy.y;
+                const isCharacterFalling = this.character.speedY < 0;
+                const isCharacterJumping = this.character.speedY > 0;
+    
+                if (isCharacterFalling && characterBottom >= enemyTop && !this.character.isHurt()) {
                     enemy.chickenDeadImg();
-                    setTimeout(() => {
-                        enemy.x = -1000;
-                        enemy.y = -1000;
-                    }, 200);
-                } else {
+                    this.character.y = 135;
+                    this.character.speedY = 0;
+                    this.removeObjectFromScreen(enemy);
+                } if (!isCharacterFalling && !isCharacterJumping) {
                     this.character.hit();
                     this.statusBar.setPercentage(this.character.life);
                 }
             }
         });
+    }
+
+    /**
+    * Removes an object from the screen.
+    * @param {Object} object - The object to be removed from the screen.
+    */
+    removeObjectFromScreen(object){
+        setTimeout(() => {
+            object.x = -1000;
+            object.y = -1000;
+        }, 80);
     }
 
     /**
@@ -124,8 +139,7 @@ class World {
                 this.level.boss[0].hit();
                 bottle.bottleBreak();
                 this.bossBar.setPercentage(this.level.boss[0].life);
-                bottle.x = -1000;
-                bottle.y = -1000;
+                this.removeObjectFromScreen(bottle);
             }
         });
     }
@@ -140,12 +154,10 @@ class World {
                     if (enemy.collisionDetection(bottle)) {
                         bottle.bottleBreak();
                         enemy.chickenDeadImg();
-                        bottle.x = -1000;
-                        bottle.y = -1000;
+                        this.removeObjectFromScreen(bottle);
                         setInterval(() => {
-                            enemy.x = -1000;
-                            enemy.y = -1000;
-                        },100);
+                            this.removeObjectFromScreen(enemy);
+                        },40);
                     }
                 }
             });
@@ -161,8 +173,7 @@ class World {
                 this.character.collectCoin();
                 this.coinBar.setCollectedCoins(this.character.collectedCoins);
                 this.checkItemsSounds(this.coin_sound);
-                coin.x = -1000;
-                coin.y = -1000;
+                this.removeObjectFromScreen(coin);
             }
         });
     }
@@ -177,8 +188,7 @@ class World {
                 this.collectedBottles.push(bottle);
                 this.bottleBar.setCollectedBottles(this.character.collectedBottles);
                 this.checkItemsSounds(this.bottle_sound);
-                bottle.x = -1000;
-                bottle.y = -1000;
+                this.removeObjectFromScreen(bottle);
             }
         });
     }
@@ -195,7 +205,7 @@ class World {
                 this.character.collectedBottles -= 10;
                 this.bottleBar.setCollectedBottles(this.character.collectedBottles);
                 this.checkItemsSounds(this.bottle_throw_sound);
-                this.throwedBottle.throwBottleAnimations();
+                this.throwedBottle.throwAnimation();
             }
         }
     }

@@ -254,9 +254,9 @@ class Character extends MovingObjects{
         this.speedY = 22;
         this.offset = {
             top: 20,
-            left: 5,
-            right: -5,
-            bottom: 50
+            left: 20,
+            right: -20,
+            bottom: 0
         }
     }
 
