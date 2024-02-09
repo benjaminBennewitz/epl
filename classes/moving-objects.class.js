@@ -39,6 +39,18 @@ class MovingObjects extends DrawableObject{
     }
 
     /**
+     * special hit points from boss on character
+     */
+     bossHit(){
+        this.life -= 175;
+        if(this.life < 0){
+            this.life = 0;
+        }else{
+            this.hitCount =new Date().getTime();
+        }
+    }
+
+    /**
      * Increases the number of collected coins by 10.
      */
     collectCoin(){

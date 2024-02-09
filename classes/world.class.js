@@ -90,15 +90,15 @@ class World {
             if (!enemy.isDead() && this.character.collisionDetection(enemy)) {
                 const characterBottom = this.character.y + this.character.height;
                 const enemyTop = enemy.y;
-                const isCharacterFalling = this.character.speedY < 0;
-                const isCharacterJumping = this.character.speedY > 0;
+                let isCharacterFalling = this.character.speedY < 0;
+                let isCharacterJumping = this.character.speedY > 0;
     
                 if (isCharacterFalling && characterBottom >= enemyTop && !this.character.isHurt()) {
                     enemy.chickenDeadImg();
                     this.character.y = 135;
                     this.character.speedY = 0;
                     this.removeObjectFromScreen(enemy);
-                } if (!isCharacterFalling && !isCharacterJumping) {
+                } if (!isCharacterFalling && !isCharacterJumping){
                     this.character.hit();
                     this.statusBar.setPercentage(this.character.life);
                 }
@@ -123,7 +123,7 @@ class World {
     checkCollisionCharacterBoss() {
         this.level.boss.forEach((enemy) => {
             if (this.character.collisionDetection(enemy)) {
-                this.character.hit();
+                this.character.bossHit();
                 this.statusBar.setPercentage(this.character.life);
                 this.character.x = this.character.x - 30;
             }

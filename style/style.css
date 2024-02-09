@@ -144,10 +144,11 @@ body{
 }
 
 .modal{
-    width: 75%;
-    height: 75%;
+    width: 80%;
+    height: 70%;
     background-color: tomato;
     color:black;
+    padding:24px;
     z-index: 9999;
 
     position: absolute;
@@ -346,6 +347,10 @@ body{
         position: relative;
         top:44px;
         left:8px;
+    }
+    .modal{
+        width: 90%;
+        height: auto;
     }
 }
 
