@@ -134,7 +134,7 @@ class MovingObjects extends DrawableObject{
                 this.y -= this.speedY;
                 this.speedY -= this.acceleration;
             }
-        },1000 / 40);
+        },1000 / 60);
     }
 
     /**
@@ -145,7 +145,7 @@ class MovingObjects extends DrawableObject{
         if(this instanceof Projectiles){
             return true;
         } else {
-            return this.y <= 120;
+            return this.y < 120;
         }
     }
 

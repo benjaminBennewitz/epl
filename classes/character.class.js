@@ -19,13 +19,6 @@ class Character extends MovingObjects{
     longIdleTimer = 0;
     longIdleThreshold = 9500;
 
-    offset = {
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0
-    };
-
     IMAGES_WALKING = [
         'img/2_character_pepe/2_walk/W-21.png',
         'img/2_character_pepe/2_walk/W-22.png',
@@ -169,18 +162,13 @@ class Character extends MovingObjects{
 
     /**
      * Sets the character's offset to the default walking offset.
-     * @function walkingOffset
-     * @memberof Character
-     * @example
-     * walkingOffset();
-     * returns { top: 110, left: 0, right: 0, bottom: 10 }
-    */    
+     */    
     walkingOffset(){
         this.offset = {
             top: 110,
             left: 0,
             right: 0,
-            bottom: -220
+            bottom: -250
         }
     }
 

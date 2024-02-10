@@ -82,29 +82,39 @@ class World {
         }
     }
 
-    /**
-     * Checks for collision between the character and enemies in the level.
-     */
-    checkCollisionCharacter() {
-        this.level.enemies.forEach((enemy) => {
-            if (!enemy.isDead() && this.character.collisionDetection(enemy)) {
-                const characterBottom = this.character.y + this.character.height;
-                const enemyTop = enemy.y;
-                let isCharacterFalling = this.character.speedY < 0;
-                let isCharacterJumping = this.character.speedY > 0;
-    
-                if (isCharacterFalling && characterBottom >= enemyTop && !this.character.isHurt()) {
-                    enemy.chickenDeadImg();
-                    this.character.y = 135;
-                    this.character.speedY = 0;
-                    this.removeObjectFromScreen(enemy);
-                } if (!isCharacterFalling && !isCharacterJumping){
-                    this.character.hit();
-                    this.statusBar.setPercentage(this.character.life);
-                }
+   /**
+ * Checks for collision between the character and enemies in the level.
+ */
+checkCollisionCharacter() {
+    let isCollision = false;
+    let isCharacterFalling = this.character.speedY < 0;
+            let isCharacterJumping = this.character.speedY > 0;
+
+    this.level.enemies.forEach((enemy) => {
+        if (!enemy.isDead() && this.character.collisionDetection(enemy)) {
+            const characterBottom = this.character.y + this.character.height;
+            const enemyTop = enemy.y;
+            
+
+            if (isCharacterFalling && characterBottom >= enemyTop && !this.character.isHurt()) {
+                enemy.chickenDeadImg();
+                this.character.y = 135;
+                this.character.speedY = 0;
+                this.removeObjectFromScreen(enemy);
+                isCollision = true;
+            } else if (!isCharacterFalling && !isCharacterJumping) {
+                this.character.hit();
+                this.statusBar.setPercentage(this.character.life);
+                isCollision = true;
             }
-        });
+        }
+    });
+
+    if (!isCollision && !isCharacterJumping || isCharacterFalling) {
+        this.character.speedY = 0;
     }
+}
+
 
     /**
     * Removes an object from the screen.
